@@ -77,7 +77,7 @@ lib/
 ├── app.dart                          # Root app + scroll behavior
 ├── main.dart
 ├── core/
-│   ├── router/app_router.dart        # GoRouter — 16 routes
+│   ├── router/app_router.dart        # GoRouter — 24 routes
 │   └── theme/
 │       ├── app_colors.dart           # Design tokens
 │       └── app_theme.dart            # MaterialTheme
@@ -91,7 +91,9 @@ lib/
     ├── cart/                         # Cart page
     ├── checkout/                     # Checkout form page
     ├── orders/                       # Order tracking, live tracking, invoice
-    ├── profile/                      # Profile, edit profile
+    ├── profile/                      # Profile, edit profile, addresses,
+    │                                 # payment methods, favourites, reviews,
+    │                                 # promos, faq, settings, loyalty
     └── notifications/                # Notification page
 ```
 
@@ -115,6 +117,14 @@ lib/
 | `/profile` | Profile |
 | `/edit-profile` | Edit Profile |
 | `/notifications` | Notifications |
+| `/addresses` | Saved Addresses |
+| `/payment-methods` | Payment Methods |
+| `/favourites` | Favourite Items |
+| `/reviews` | My Reviews |
+| `/promos` | Promo & Vouchers |
+| `/faq` | Help & FAQ |
+| `/settings` | Settings |
+| `/loyalty` | Loyalty & Rewards |
 
 ## Roadmap
 
@@ -126,15 +136,15 @@ lib/
 - [x] Phase 5 — Profile (Profile, Edit Profile)
 - [x] Phase 6 — Polish & UX (Notifications, Onboarding, notification badge)
 
-### Upcoming — Phase 7
-- [ ] Saved Addresses page
-- [ ] Payment Methods page
-- [ ] Favourites / Wishlist page
-- [ ] My Reviews page
-- [ ] Promo & Vouchers page
-- [ ] Help & FAQ page
-- [ ] Settings page (full preferences)
-- [ ] Loyalty Points & Rewards page
+### Phase 7 — Profile Pages (Complete)
+- **Saved Addresses** — Select default, edit, delete address cards
+- **Payment Methods** — Grouped by type (E-Wallet/Bank/Card/COD), select default
+- **Favourite Items** — Remove from favourites, tap to product detail
+- **My Reviews** — Rating summary, order items per review, edit review
+- **Promo & Vouchers** — 2-tab (Promos/My Vouchers), promo code input, copy code chip
+- **Help & FAQ** — Searchable accordion, grouped by category, contact support card
+- **Settings** — Notification, email, preferences, privacy toggles + account actions
+- **Loyalty & Rewards** — Points card with tier progress, redeem rewards, points history
 
 ## Getting Started
 
