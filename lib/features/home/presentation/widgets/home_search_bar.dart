@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hot_pot/core/theme/app_colors.dart';
 
 /// Search bar + delivery/dine-in toggle row di bawah header.
@@ -12,38 +13,44 @@ class HomeSearchBar extends StatelessWidget {
       child: Row(
         children: [
           Expanded(
-            child: Container(
-              height: 44,
-              decoration: BoxDecoration(
-                color: AppColors.surface,
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: AppColors.border),
-              ),
-              child: Row(
-                children: [
-                  const SizedBox(width: 12),
-                  Icon(Icons.search, color: AppColors.textSecondary, size: 18),
-                  const SizedBox(width: 8),
-                  Text(
-                    'Search menu...',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: AppColors.textSecondary,
+            child: GestureDetector(
+              onTap: () => context.push('/search'),
+              child: Container(
+                height: 44,
+                decoration: BoxDecoration(
+                  color: AppColors.surface,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: AppColors.border),
+                ),
+                child: Row(
+                  children: [
+                    const SizedBox(width: 12),
+                    Icon(Icons.search, color: AppColors.textSecondary, size: 18),
+                    const SizedBox(width: 8),
+                    Text(
+                      'Search menu...',
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: AppColors.textSecondary,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
           const SizedBox(width: 10),
-          Container(
-            width: 44,
-            height: 44,
-            decoration: BoxDecoration(
-              color: AppColors.primary,
-              borderRadius: BorderRadius.circular(12),
+          GestureDetector(
+            onTap: () => context.push('/category'),
+            child: Container(
+              width: 44,
+              height: 44,
+              decoration: BoxDecoration(
+                color: AppColors.primary,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: const Icon(Icons.tune, color: Colors.white, size: 20),
             ),
-            child: const Icon(Icons.tune, color: Colors.white, size: 20),
           ),
         ],
       ),

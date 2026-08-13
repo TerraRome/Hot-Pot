@@ -115,7 +115,10 @@ class _BottomNav extends StatelessWidget {
                 icon: Icons.explore_outlined,
                 label: 'Explore',
                 active: currentIndex == 1,
-                onTap: () => onTap(1),
+                onTap: () {
+                  onTap(1);
+                  context.push(AppRoutes.category);
+                },
               ),
               _NavItem(
                 icon: Icons.receipt_long_outlined,
@@ -130,7 +133,10 @@ class _BottomNav extends StatelessWidget {
                 icon: Icons.person_outline_rounded,
                 label: 'Account',
                 active: currentIndex == 3,
-                onTap: () => onTap(3),
+                onTap: () {
+                  onTap(3);
+                  context.push(AppRoutes.profile);
+                },
               ),
             ],
           ),

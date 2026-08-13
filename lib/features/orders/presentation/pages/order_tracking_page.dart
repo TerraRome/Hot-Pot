@@ -337,6 +337,35 @@ class _LiveTrackingCard extends StatelessWidget {
               ],
             ),
           ),
+          const SizedBox(height: 14),
+          // Track live button
+          GestureDetector(
+            onTap: () => context.push('/live-tracking'),
+            child: Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(vertical: 11),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.my_location_rounded,
+                      size: 15, color: AppColors.primary),
+                  SizedBox(width: 6),
+                  Text(
+                    'Track Live',
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.primary,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );
