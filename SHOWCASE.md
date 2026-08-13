@@ -32,7 +32,7 @@ A full-featured Flutter food delivery app built from scratch, covering the compl
 | 16 | Edit Profile | `/edit-profile` | GIF | ✅ |
 | 17 | Saved Addresses | `/addresses` | PNG | ✅ |
 | 18 | Payment Methods | `/payment-methods` | PNG | ✅ |
-| 19 | Favourites | `/favourites` | PNG | ⏳ |
+| 19 | Favourites | `/favourites` | PNG | ✅ |
 | 20 | My Reviews | `/reviews` | PNG | ⏳ |
 | 21 | Promo Vouchers | `/promos` | PNG | ✅ |
 | 22 | Help & FAQ | `/faq` | GIF | ⏳ |
@@ -69,9 +69,9 @@ A full-featured Flutter food delivery app built from scratch, covering the compl
 |---------|-------------|----------------|----------------|
 | <img src="assets/gif/15_profile.gif" width="200"> | <img src="assets/gif/16_edit_profile.gif" width="200"> | <img src="assets/screenshots/17_saved_addresses.png" width="200"> | <img src="assets/screenshots/18_payment_methods.png" width="200"> |
 
-| Favourites | My Reviews | Promo & Vouchers | Help & FAQ |
-|-----------|-----------|-----------------|-----------|
-| <img src="assets/screenshots/19_favourites.png" width="200"> | <img src="assets/screenshots/20_my_reviews.png" width="200"> | <img src="assets/screenshots/21_promo_vouchers.png" width="200"> | <img src="assets/gif/22_help_faq.gif" width="200"> |
+| Favourites | My Reviews | Promo | Vouchers | Help & FAQ |
+|-----------|-----------|-------|---------|-----------|
+| <img src="assets/screenshots/19_favourites.png" width="200"> | <img src="assets/screenshots/20_my_reviews.png" width="200"> | <img src="assets/screenshots/21_promo_vouchers.png" width="200"> | <img src="assets/screenshots/21b_vouchers.png" width="200"> | <img src="assets/gif/22_help_faq.gif" width="200"> |
 
 | Settings | Loyalty & Rewards |
 |---------|------------------|
