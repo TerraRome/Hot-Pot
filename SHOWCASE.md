@@ -37,7 +37,7 @@ A full-featured Flutter food delivery app built from scratch, covering the compl
 | 21 | Promo Vouchers | `/promos` | PNG | ✅ |
 | 22 | Help & FAQ | `/faq` | GIF | ✅ |
 | 23 | Settings | `/settings` | GIF | ✅ |
-| 24 | Loyalty & Rewards | `/loyalty` | GIF | ⏳ |
+| 24 | Loyalty & Rewards | `/loyalty` | GIF | ✅ |
 
 ---
 
