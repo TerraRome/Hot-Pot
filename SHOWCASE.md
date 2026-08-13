@@ -45,37 +45,37 @@ A full-featured Flutter food delivery app built from scratch, covering the compl
 
 | Splash | Onboarding | Sign In | OTP |
 |--------|-----------|---------|-----|
-| ![splash](assets/screenshots/01_splash.png) | ![onboarding](assets/gif/onboarding.gif) | ![signin](assets/screenshots/03_signin.png) | ![otp](assets/screenshots/04_otp.png) |
+| <img src="assets/screenshots/01_splash.png" width="200"> | <img src="assets/gif/onboarding.gif" width="200"> | <img src="assets/screenshots/03_signin.png" width="200"> | <img src="assets/screenshots/04_otp.png" width="200"> |
 
 ### Browse & Discovery
 
-| Home | Search | Search Results | Category Browse |
-|------|--------|---------------|----------------|
-| ![home](assets/screenshots/05_home.png) | ![search](assets/screenshots/06_search.png) | ![search results](assets/screenshots/06_search_results.png) | ![category](assets/screenshots/07_category.png) |
+| Home | Search | Category Browse |
+|------|--------|----------------|
+| <img src="assets/screenshots/05_home.png" width="200"> | <img src="assets/screenshots/06_search.png" width="200"> | <img src="assets/screenshots/07_category.png" width="200"> |
 
 ### Order Flow
 
 | Product Detail | Cart | Checkout | Order Tracking |
 |---------------|------|---------|---------------|
-| ![product](assets/screenshots/08_product_detail.png) | ![cart](assets/screenshots/09_cart.png) | ![checkout](assets/screenshots/10_checkout.png) | ![orders](assets/screenshots/11_order_tracking.png) |
+| <img src="assets/screenshots/08_product_detail.png" width="200"> | <img src="assets/screenshots/09_cart.png" width="200"> | <img src="assets/screenshots/10_checkout.png" width="200"> | <img src="assets/gif/11_order_tracking.gif" width="200"> |
 
 | Live Tracking | Invoice | Notifications |
 |--------------|---------|--------------|
-| ![live](assets/screenshots/12_live_tracking.png) | ![invoice](assets/screenshots/13_invoice.png) | ![notif](assets/screenshots/14_notifications.png) |
+| <img src="assets/screenshots/12_live_tracking.png" width="200"> | <img src="assets/screenshots/13_invoice.png" width="200"> | <img src="assets/screenshots/14_notifications.png" width="200"> |
 
 ### Profile & Account
 
 | Profile | Edit Profile | Saved Addresses | Payment Methods |
 |---------|-------------|----------------|----------------|
-| ![profile](assets/screenshots/15_profile.png) | ![edit](assets/screenshots/16_edit_profile.png) | ![addresses](assets/screenshots/17_saved_addresses.png) | ![payment](assets/screenshots/18_payment_methods.png) |
+| <img src="assets/gif/15_profile.gif" width="200"> | <img src="assets/screenshots/16_edit_profile.png" width="200"> | <img src="assets/screenshots/17_saved_addresses.png" width="200"> | <img src="assets/screenshots/18_payment_methods.png" width="200"> |
 
 | Favourites | My Reviews | Promo & Vouchers | Help & FAQ |
 |-----------|-----------|-----------------|-----------|
-| ![favs](assets/screenshots/19_favourites.png) | ![reviews](assets/screenshots/20_my_reviews.png) | ![promos](assets/screenshots/21_promo_vouchers.png) | ![faq](assets/screenshots/22_help_faq.png) |
+| <img src="assets/screenshots/19_favourites.png" width="200"> | <img src="assets/screenshots/20_my_reviews.png" width="200"> | <img src="assets/screenshots/21_promo_vouchers.png" width="200"> | <img src="assets/gif/22_help_faq.gif" width="200"> |
 
 | Settings | Loyalty & Rewards |
 |---------|------------------|
-| ![settings](assets/screenshots/23_settings.png) | ![loyalty](assets/screenshots/24_loyalty.png) |
+| <img src="assets/gif/23_settings.gif" width="200"> | <img src="assets/gif/24_loyalty.gif" width="200"> |
 
 ---
 
