@@ -14,7 +14,7 @@ A full-featured Flutter food delivery app built from scratch, covering the compl
 
 | # | Halaman | Route | Tipe | Status |
 |---|---------|-------|------|--------|
-| 01 | Splash | `/splash` | PNG | ⏳ |
+| 01 | Splash | `/splash` | PNG | ✅ |
 | 02 | Onboarding | `/onboarding` | GIF | ✅ |
 | 03 | Sign In | `/signin` | PNG | ✅ |
 | 04 | OTP | `/otp` | PNG | ✅ |
