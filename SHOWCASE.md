@@ -21,9 +21,9 @@ A full-featured Flutter food delivery app built from scratch, covering the compl
 | 05 | Home | `/` | PNG | ✅ |
 | 06 | Search | `/search` | PNG | ✅ |
 | 07 | Category Browse | `/category` | PNG | ✅ |
-| 08 | Product Detail | `/product` | PNG | ⏳ |
-| 09 | Cart | `/cart` | PNG | ⏳ |
-| 10 | Checkout | `/checkout` | PNG | ⏳ |
+| 08 | Product Detail | `/product` | GIF | ✅ |
+| 09 | Cart | `/cart` | GIF | ✅ |
+| 10 | Checkout | `/checkout` | GIF | ✅ |
 | 11 | Order Tracking | `/tracking` | PNG | ✅ |
 | 12 | Live Tracking | `/live-tracking` | PNG | ✅ |
 | 13 | Invoice | `/invoice` | PNG | ✅ |
