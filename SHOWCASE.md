@@ -14,7 +14,7 @@ A full-featured Flutter food delivery app built from scratch, covering the compl
 
 | Splash | Onboarding | Sign In | OTP |
 |--------|-----------|---------|-----|
-| ![splash](assets/screenshots/01_splash.png) | ![onboarding](assets/screenshots/02_onboarding_slide1.png) | ![signin](assets/screenshots/03_signin.png) | ![otp](assets/screenshots/04_otp.png) |
+| ![splash](assets/screenshots/01_splash.png) | ![onboarding](assets/gif/onboarding.gif) | ![signin](assets/screenshots/03_signin.png) | ![otp](assets/screenshots/04_otp.png) |
 
 ### Browse & Discovery
 
