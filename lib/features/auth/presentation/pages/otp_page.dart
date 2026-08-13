@@ -15,10 +15,8 @@ class _OtpPageState extends State<OtpPage> {
   static const int _otpLength = 6;
   static const int _resendSeconds = 60;
 
-  final List<TextEditingController> _controllers =
-      List.generate(_otpLength, (_) => TextEditingController());
-  final List<FocusNode> _focusNodes =
-      List.generate(_otpLength, (_) => FocusNode());
+  final TextEditingController _ctrl = TextEditingController();
+  final FocusNode _focusNode = FocusNode();
 
   int _countdown = _resendSeconds;
   Timer? _timer;
@@ -32,9 +30,9 @@ class _OtpPageState extends State<OtpPage> {
       statusBarIconBrightness: Brightness.dark,
     ));
     _startTimer();
-    // Auto focus ke box pertama
+    _ctrl.addListener(() => setState(() {}));
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _focusNodes[0].requestFocus();
+      _focusNode.requestFocus();
     });
   }
 
@@ -52,41 +50,27 @@ class _OtpPageState extends State<OtpPage> {
 
   @override
   void dispose() {
-    for (final c in _controllers) {
-      c.dispose();
-    }
-    for (final f in _focusNodes) {
-      f.dispose();
-    }
+    _ctrl.dispose();
+    _focusNode.dispose();
     _timer?.cancel();
     super.dispose();
   }
 
-  void _onOtpChanged(int index, String value) {
-    if (value.length == 1 && index < _otpLength - 1) {
-      _focusNodes[index + 1].requestFocus();
-    } else if (value.isEmpty && index > 0) {
-      _focusNodes[index - 1].requestFocus();
-    }
-    // Auto verify kalau semua box terisi
-    final fullCode =
-        _controllers.map((c) => c.text).join();
-    if (fullCode.length == _otpLength) {
+  void _onChanged(String value) {
+    if (value.length == _otpLength) {
       _onVerify();
     }
   }
 
   void _onVerify() async {
+    if (_isVerifying) return;
     setState(() => _isVerifying = true);
-    await Future.delayed(const Duration(milliseconds: 900));
+    await Future<void>.delayed(const Duration(milliseconds: 900));
     if (mounted) {
       setState(() => _isVerifying = false);
       context.go('/');
     }
   }
-
-  String get _fullCode =>
-      _controllers.map((c) => c.text).join();
 
   @override
   Widget build(BuildContext context) {
@@ -99,13 +83,12 @@ class _OtpPageState extends State<OtpPage> {
             SliverFillRemaining(
               hasScrollBody: false,
               child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
                   children: [
                     const SizedBox(height: 32),
 
-                    // ── Back button ──────────────────────────────
+                    // ── Back button ──────────────────────────────────────
                     Align(
                       alignment: Alignment.centerLeft,
                       child: GestureDetector(
@@ -116,20 +99,20 @@ class _OtpPageState extends State<OtpPage> {
                           decoration: BoxDecoration(
                             color: AppColors.surface,
                             borderRadius: BorderRadius.circular(10),
-                            border: Border.all(
-                                color: AppColors.borderDivider),
+                            border: Border.all(color: AppColors.borderDivider),
                           ),
                           child: const Icon(
-                              Icons.arrow_back_ios_new,
-                              size: 16,
-                              color: AppColors.foreground),
+                            Icons.arrow_back_ios_new,
+                            size: 16,
+                            color: AppColors.foreground,
+                          ),
                         ),
                       ),
                     ),
 
                     const SizedBox(height: 40),
 
-                    // ── Card ─────────────────────────────────────
+                    // ── Card ─────────────────────────────────────────────
                     Container(
                       width: double.infinity,
                       padding: const EdgeInsets.symmetric(
@@ -139,8 +122,7 @@ class _OtpPageState extends State<OtpPage> {
                         borderRadius: BorderRadius.circular(24),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black
-                                .withValues(alpha: 0.06),
+                            color: Colors.black.withValues(alpha: 0.06),
                             blurRadius: 20,
                             offset: const Offset(0, 4),
                           ),
@@ -148,7 +130,7 @@ class _OtpPageState extends State<OtpPage> {
                       ),
                       child: Column(
                         children: [
-                          // Mail icon dalam circle crimson
+                          // Mail icon
                           Container(
                             width: 72,
                             height: 72,
@@ -156,8 +138,7 @@ class _OtpPageState extends State<OtpPage> {
                               shape: BoxShape.circle,
                               color: AppColors.primaryBg,
                               border: Border.all(
-                                  color: AppColors.primaryMuted,
-                                  width: 1.5),
+                                  color: AppColors.primaryMuted, width: 1.5),
                             ),
                             child: const Center(
                               child: Icon(
@@ -191,24 +172,17 @@ class _OtpPageState extends State<OtpPage> {
 
                           const SizedBox(height: 32),
 
-                          // ── OTP boxes ───────────────────────────
-                          Row(
-                            mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
-                            children: List.generate(
-                              _otpLength,
-                              (i) => _OtpBox(
-                                controller: _controllers[i],
-                                focusNode: _focusNodes[i],
-                                onChanged: (v) =>
-                                    _onOtpChanged(i, v),
-                              ),
-                            ),
+                          // ── OTP input (hidden) + box overlay ───────────
+                          _OtpInputField(
+                            controller: _ctrl,
+                            focusNode: _focusNode,
+                            length: _otpLength,
+                            onChanged: _onChanged,
                           ),
 
                           const SizedBox(height: 12),
 
-                          // ── Timer ────────────────────────────────
+                          // ── Timer ─────────────────────────────────────
                           Text(
                             _countdown > 0
                                 ? 'Code expires in 0:${_countdown.toString().padLeft(2, '0')}'
@@ -223,24 +197,21 @@ class _OtpPageState extends State<OtpPage> {
 
                           const SizedBox(height: 28),
 
-                          // ── Verify button ───────────────────────
+                          // ── Verify button ──────────────────────────────
                           SizedBox(
                             width: double.infinity,
                             child: ElevatedButton(
                               onPressed: _isVerifying ||
-                                      _fullCode.length < _otpLength
+                                      _ctrl.text.length < _otpLength
                                   ? null
                                   : _onVerify,
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: AppColors.primary,
                                 foregroundColor: Colors.white,
-                                minimumSize:
-                                    const Size.fromHeight(52),
-                                disabledBackgroundColor:
-                                    AppColors.primaryMuted,
+                                minimumSize: const Size.fromHeight(52),
+                                disabledBackgroundColor: AppColors.primaryMuted,
                                 shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.circular(12),
+                                  borderRadius: BorderRadius.circular(12),
                                 ),
                                 elevation: 0,
                               ),
@@ -265,7 +236,7 @@ class _OtpPageState extends State<OtpPage> {
 
                           const SizedBox(height: 16),
 
-                          // ── Resend link ──────────────────────────
+                          // ── Resend link ────────────────────────────────
                           GestureDetector(
                             onTap: _countdown <= 0 ? _startTimer : null,
                             child: Text(
@@ -288,7 +259,7 @@ class _OtpPageState extends State<OtpPage> {
 
                     const Spacer(),
 
-                    // ── Security note ────────────────────────────
+                    // ── Security note ──────────────────────────────────
                     Padding(
                       padding: const EdgeInsets.only(bottom: 24),
                       child: Row(
@@ -297,8 +268,7 @@ class _OtpPageState extends State<OtpPage> {
                           Icon(
                             Icons.lock_outline,
                             size: 12,
-                            color: AppColors.textSecondary
-                                .withValues(alpha: 0.7),
+                            color: AppColors.textSecondary.withValues(alpha: 0.7),
                           ),
                           const SizedBox(width: 6),
                           const Text(
@@ -322,24 +292,27 @@ class _OtpPageState extends State<OtpPage> {
   }
 }
 
-// ── OTP box ───────────────────────────────────────────────────────────────────
+// ── OTP Input Field ───────────────────────────────────────────────────────────
+// Satu TextField tersembunyi, 6 box overlay yang membaca teks dari controller.
 
-class _OtpBox extends StatefulWidget {
-  const _OtpBox({
+class _OtpInputField extends StatefulWidget {
+  const _OtpInputField({
     required this.controller,
     required this.focusNode,
+    required this.length,
     required this.onChanged,
   });
 
   final TextEditingController controller;
   final FocusNode focusNode;
+  final int length;
   final ValueChanged<String> onChanged;
 
   @override
-  State<_OtpBox> createState() => _OtpBoxState();
+  State<_OtpInputField> createState() => _OtpInputFieldState();
 }
 
-class _OtpBoxState extends State<_OtpBox> {
+class _OtpInputFieldState extends State<_OtpInputField> {
   @override
   void initState() {
     super.initState();
@@ -348,52 +321,116 @@ class _OtpBoxState extends State<_OtpBox> {
 
   @override
   Widget build(BuildContext context) {
+    final code = widget.controller.text;
     final focused = widget.focusNode.hasFocus;
-    final filled = widget.controller.text.isNotEmpty;
 
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 150),
-      width: 48,
-      height: 56,
-      decoration: BoxDecoration(
-        color: filled ? AppColors.primaryBg : AppColors.background,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: focused
-              ? AppColors.primary
-              : filled
-                  ? AppColors.primaryMuted
-                  : AppColors.borderDivider,
-          width: focused ? 2 : 1.5,
-        ),
-      ),
-      child: Center(
-        child: SizedBox(
-          width: 48,
-          height: 56,
-          child: TextField(
-            controller: widget.controller,
-            focusNode: widget.focusNode,
-            textAlign: TextAlign.center,
-            textAlignVertical: TextAlignVertical.center,
-            keyboardType: TextInputType.number,
-            maxLength: 1,
-            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-            style: const TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.w700,
-              color: AppColors.primary,
-              height: 1.0,
+    return GestureDetector(
+      onTap: () => widget.focusNode.requestFocus(),
+      child: Stack(
+        children: [
+          // Hidden TextField — menangkap semua keyboard input
+          Opacity(
+            opacity: 0,
+            child: SizedBox(
+              height: 0,
+              child: TextField(
+                controller: widget.controller,
+                focusNode: widget.focusNode,
+                keyboardType: TextInputType.number,
+                maxLength: widget.length,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                decoration: const InputDecoration(counterText: ''),
+                onChanged: widget.onChanged,
+              ),
             ),
-            decoration: const InputDecoration(
-              border: InputBorder.none,
-              focusedBorder: InputBorder.none,
-              enabledBorder: InputBorder.none,
-              counterText: '',
-              contentPadding: EdgeInsets.zero,
-            ),
-            onChanged: widget.onChanged,
           ),
+
+          // Box overlay — 6 box visual
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: List.generate(widget.length, (i) {
+              final hasDigit = i < code.length;
+              final isActive = focused && i == code.length;
+              final isPast = focused && i < code.length;
+
+              return AnimatedContainer(
+                duration: const Duration(milliseconds: 150),
+                width: 46,
+                height: 56,
+                decoration: BoxDecoration(
+                  color: hasDigit
+                      ? AppColors.primaryBg
+                      : AppColors.background,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
+                    color: isActive
+                        ? AppColors.primary
+                        : isPast
+                            ? AppColors.primaryMuted
+                            : AppColors.borderDivider,
+                    width: isActive ? 2 : 1.5,
+                  ),
+                ),
+                child: Center(
+                  child: hasDigit
+                      ? Text(
+                          code[i],
+                          style: const TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.primary,
+                            height: 1.0,
+                          ),
+                        )
+                      : isActive
+                          ? _BlinkingCursor()
+                          : const SizedBox.shrink(),
+                ),
+              );
+            }),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// ── Blinking cursor ───────────────────────────────────────────────────────────
+
+class _BlinkingCursor extends StatefulWidget {
+  @override
+  State<_BlinkingCursor> createState() => _BlinkingCursorState();
+}
+
+class _BlinkingCursorState extends State<_BlinkingCursor>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _anim;
+
+  @override
+  void initState() {
+    super.initState();
+    _anim = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 500),
+    )..repeat(reverse: true);
+  }
+
+  @override
+  void dispose() {
+    _anim.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FadeTransition(
+      opacity: _anim,
+      child: Container(
+        width: 2,
+        height: 24,
+        decoration: BoxDecoration(
+          color: AppColors.primary,
+          borderRadius: BorderRadius.circular(1),
         ),
       ),
     );
