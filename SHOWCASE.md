@@ -20,7 +20,7 @@ A full-featured Flutter food delivery app built from scratch, covering the compl
 | 04 | OTP | `/otp` | PNG | ✅ |
 | 05 | Home | `/` | PNG | ✅ |
 | 06 | Search | `/search` | PNG | ✅ |
-| 07 | Category Browse | `/category` | PNG | ⏳ |
+| 07 | Category Browse | `/category` | PNG | ✅ |
 | 08 | Product Detail | `/product` | PNG | ⏳ |
 | 09 | Cart | `/cart` | PNG | ⏳ |
 | 10 | Checkout | `/checkout` | PNG | ⏳ |
