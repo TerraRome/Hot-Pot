@@ -394,7 +394,7 @@ class _GenderPicker extends StatelessWidget {
   final String selected;
   final ValueChanged<String> onChanged;
 
-  static const _options = ['Male', 'Female', 'Other'];
+  static const _options = ['Male', 'Female'];
 
   @override
   Widget build(BuildContext context) {
