@@ -127,11 +127,14 @@ lib/
 - [x] Phase 6 — Polish & UX (Notifications, Onboarding, notification badge)
 
 ### Upcoming — Phase 7
-- [ ] Skeleton loading states
-- [ ] Error & empty states for network failures
+- [ ] Saved Addresses page
+- [ ] Payment Methods page
+- [ ] Favourites / Wishlist page
+- [ ] My Reviews page
+- [ ] Promo & Vouchers page
+- [ ] Help & FAQ page
 - [ ] Settings page (full preferences)
-- [ ] Favorites / Wishlist page
-- [ ] Loyalty points & rewards page
+- [ ] Loyalty Points & Rewards page
 
 ## Getting Started
 

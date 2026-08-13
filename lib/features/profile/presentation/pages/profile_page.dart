@@ -29,12 +29,12 @@ class ProfilePage extends StatelessWidget {
                 _MenuItem(
                   icon: Icons.location_on_outlined,
                   label: 'Saved Addresses',
-                  onTap: () {},
+                  onTap: () => context.push('/addresses'),
                 ),
                 _MenuItem(
                   icon: Icons.payment_outlined,
                   label: 'Payment Methods',
-                  onTap: () {},
+                  onTap: () => context.push('/payment-methods'),
                 ),
                 _MenuItem(
                   icon: Icons.card_giftcard_outlined,
@@ -52,12 +52,12 @@ class ProfilePage extends StatelessWidget {
                 _MenuItem(
                   icon: Icons.favorite_border,
                   label: 'Favourite Items',
-                  onTap: () {},
+                  onTap: () => context.push('/favourites'),
                 ),
                 _MenuItem(
                   icon: Icons.star_border_rounded,
                   label: 'My Reviews',
-                  onTap: () {},
+                  onTap: () => context.push('/reviews'),
                 ),
                 const SizedBox(height: 12),
                 _SectionLabel('Support'),
@@ -468,7 +468,7 @@ class _ToggleState extends State<_Toggle> {
     return Switch(
       value: _value,
       onChanged: (v) => setState(() => _value = v),
-      activeColor: AppColors.primary,
+      activeThumbColor: AppColors.primary,
       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
     );
   }

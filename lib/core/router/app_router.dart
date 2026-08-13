@@ -18,6 +18,10 @@ import 'package:hot_pot/features/orders/presentation/pages/invoice_page.dart';
 import 'package:hot_pot/features/orders/presentation/pages/live_tracking_page.dart';
 import 'package:hot_pot/features/notifications/presentation/pages/notification_page.dart';
 import 'package:hot_pot/features/onboarding/presentation/pages/onboarding_page.dart';
+import 'package:hot_pot/features/profile/presentation/pages/saved_addresses_page.dart';
+import 'package:hot_pot/features/profile/presentation/pages/payment_methods_page.dart';
+import 'package:hot_pot/features/profile/presentation/pages/favourites_page.dart';
+import 'package:hot_pot/features/profile/presentation/pages/my_reviews_page.dart';
 
 /// Named route constants.
 abstract final class AppRoutes {
@@ -40,6 +44,10 @@ abstract final class AppRoutes {
   static const String liveTracking = '/live-tracking';
   static const String notifications = '/notifications';
   static const String onboarding = '/onboarding';
+  static const String savedAddresses = '/addresses';
+  static const String paymentMethods = '/payment-methods';
+  static const String favourites = '/favourites';
+  static const String myReviews = '/reviews';
 }
 
 /// GoRouter instance untuk seluruh app.
@@ -147,6 +155,26 @@ final appRouter = GoRouter(
       path: AppRoutes.onboarding,
       name: 'onboarding',
       builder: (context, state) => const OnboardingPage(),
+    ),
+    GoRoute(
+      path: AppRoutes.savedAddresses,
+      name: 'addresses',
+      builder: (context, state) => const SavedAddressesPage(),
+    ),
+    GoRoute(
+      path: AppRoutes.paymentMethods,
+      name: 'payment-methods',
+      builder: (context, state) => const PaymentMethodsPage(),
+    ),
+    GoRoute(
+      path: AppRoutes.favourites,
+      name: 'favourites',
+      builder: (context, state) => const FavouritesPage(),
+    ),
+    GoRoute(
+      path: AppRoutes.myReviews,
+      name: 'reviews',
+      builder: (context, state) => const MyReviewsPage(),
     ),
   ],
 );
