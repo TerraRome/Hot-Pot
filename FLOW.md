@@ -183,24 +183,63 @@ App Launch
     │       │                       ├── Preferences (spice, notif, language)
     │       │                       └── "Save Changes" ──► back to Profile
     │       │
-    │       ├── Saved Addresses
-    │       ├── Payment Methods
-    │       └── Promo & Vouchers
+    │       ├── Saved Addresses ──► [Saved Addresses Page]
+    │       │                           ├── Select default (animated border)
+    │       │                           ├── Edit / Delete per card
+    │       │                           └── Add New Address button
+    │       │
+    │       ├── Payment Methods ──► [Payment Methods Page]
+    │       │                           ├── Grouped: E-Wallet / Bank / Card / COD
+    │       │                           ├── Select default (radio indicator)
+    │       │                           └── Add Payment Method button
+    │       │
+    │       └── Promo & Vouchers ──► [Promo & Vouchers Page]
+    │                                   ├── Tab: Available Promos
+    │                                   │     ├── Promo code input + Apply
+    │                                   │     └── Promo cards (color band, copy chip)
+    │                                   └── Tab: My Vouchers
+    │                                         └── Personal voucher cards
     │
     ├── Orders section
     │       ├── Order History ──► [Order Tracking Page]
-    │       ├── Favourite Items
-    │       └── My Reviews
+    │       │
+    │       ├── Favourite Items ──► [Favourites Page]
+    │       │                           ├── Item cards (emoji, category, price)
+    │       │                           ├── Remove from favourites
+    │       │                           ├── Add to cart shortcut
+    │       │                           └── Tap ──► [Product Detail]
+    │       │
+    │       ├── My Reviews ──► [My Reviews Page]
+    │       │                     ├── Average rating summary
+    │       │                     ├── Review cards (order ID, items, stars, comment)
+    │       │                     └── Edit Review button
+    │       │
+    │       └── Loyalty & Rewards ──► [Loyalty Page]
+    │                                    ├── Points card (tier, progress bar)
+    │                                    ├── Redeem rewards (locked/unlocked)
+    │                                    └── Points history (earn/redeem)
     │
     ├── Support section
-    │       ├── Help & FAQ
+    │       ├── Help & FAQ ──► [Help & FAQ Page]
+    │       │                     ├── Search bar (live filter)
+    │       │                     ├── Accordion grouped by category
+    │       │                     │   (Orders / Delivery / Payment / Account)
+    │       │                     └── Contact card: Live Chat + Email Us
+    │       │
     │       ├── Contact Support
     │       └── About Crimson Dragon
     │
     ├── Preferences section
-    │       ├── Notifications toggle
-    │       ├── Dark Mode toggle
-    │       └── Language selector
+    │       ├── Notifications toggle ──► [Settings Page]
+    │       ├── Dark Mode toggle ──► [Settings Page]
+    │       └── Language selector ──► [Settings Page]
+    │           │
+    │           └── [Settings Page]
+    │                   ├── Notification toggles (Orders, Promos, App Updates)
+    │                   ├── Email toggles (Receipts, Newsletter)
+    │                   ├── Preference toggles (History, Location)
+    │                   ├── Privacy toggles (Analytics, Personalization)
+    │                   └── Account actions (Download, Change Password, Delete)
     │
     └── Sign Out ──► [Sign In Page]
 ```
@@ -249,29 +288,38 @@ Bottom Nav (4 tabs)
 
 ```
 /splash
-  └──► /signin (auto after 2.5s)
-         └──► /otp
-                └──► / (Home)
-                       ├──► /search
-                       │      └──► /product
-                       │             └──► /cart
-                       │                    └──► /checkout
-                       │                           └──► /orders
-                       │                                  ├──► /live-tracking
-                       │                                  │      └──► /invoice
-                       │                                  └──► /invoice
-                       │
-                       ├──► /category
-                       │      └──► /product (same flow as above)
-                       │
-                       ├──► /notifications
-                       │
-                       ├──► /profile
-                       │      └──► /edit-profile
-                       │
-                       └──► /cart (from header icon)
-
-/onboarding ──► /signin (skip or get started)
+  └──► /onboarding (first launch)
+         └──► /signin
+                └──► /otp
+                       └──► / (Home)
+                              ├──► /search
+                              │      └──► /product
+                              │             └──► /cart
+                              │                    └──► /checkout
+                              │                           └──► /orders
+                              │                                  ├──► /live-tracking
+                              │                                  │      └──► /invoice
+                              │                                  └──► /invoice
+                              │
+                              ├──► /category
+                              │      └──► /product (same flow as above)
+                              │
+                              ├──► /notifications
+                              │
+                              ├──► /profile
+                              │      ├──► /edit-profile
+                              │      ├──► /addresses
+                              │      ├──► /payment-methods
+                              │      ├──► /promos
+                              │      ├──► /orders
+                              │      ├──► /favourites
+                              │      │      └──► /product
+                              │      ├──► /reviews
+                              │      ├──► /loyalty
+                              │      ├──► /faq
+                              │      └──► /settings
+                              │
+                              └──► /cart (from header icon)
 ```
 
 ---
@@ -280,10 +328,14 @@ Bottom Nav (4 tabs)
 
 | Aksi User | Dari | Ke | Data yang Dikirim |
 |-----------|------|----|-------------------|
-| Tap menu item | Home / Search / Category | Product Detail | `ProductDetailArgs` (emoji, name, desc, price, spicyLevel, rating, reviews) |
+| Tap menu item | Home / Search / Category / Favourites | Product Detail | `ProductDetailArgs` (emoji, name, desc, price, spicyLevel, rating, reviews) |
 | Add to cart | Product Detail | Cart | item + qty + notes |
 | Checkout | Cart | Checkout | cart items + promo |
 | Place order | Checkout | Order Tracking | delivery method + address + payment |
 | Track live | Order Tracking | Live Tracking | order ID |
 | View invoice | Live Tracking / Order Tracking | Invoice | `InvoiceArgs` (orderId, items, fees) |
+| Apply promo | Promo & Vouchers / Checkout | — | promo code string |
+| Select address | Saved Addresses | — | address index (default) |
+| Select payment | Payment Methods | — | payment method index (default) |
+| Redeem reward | Loyalty | — | reward points cost |
 | Sign out | Profile | Sign In | — |

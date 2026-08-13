@@ -12,9 +12,13 @@ A Flutter mobile app for a hot pot restaurant — built as a portfolio project u
 |--------|----------------|---------|--------------|------|
 | Live filter + results | 6-category grid | Stats, menu sections | Form fields, date picker | Qty stepper, promo code |
 
-| Checkout | Order Tracking | Live Tracking | Invoice | Notifications |
-|----------|---------------|---------------|---------|---------------|
-| Delivery/pickup, payment | Progress steps, history | Animated map, rider | Items, summary, payment | All/Orders/Promos tabs |
+| Saved Addresses | Payment Methods | Favourites | My Reviews | Promo & Vouchers |
+|----------------|-----------------|------------|------------|-----------------|
+| Select default, edit, delete | Grouped by type, select default | Remove, add to cart | Rating summary, order items | 2-tab, code input, copy chip |
+
+| Help & FAQ | Settings | Loyalty & Rewards |
+|-----------|---------|------------------|
+| Searchable accordion, contact card | Notification/privacy toggles, account actions | Tier progress, redeem rewards, points history |
 
 ## Features
 
@@ -136,15 +140,15 @@ lib/
 - [x] Phase 5 — Profile (Profile, Edit Profile)
 - [x] Phase 6 — Polish & UX (Notifications, Onboarding, notification badge)
 
-### Phase 7 — Profile Pages (Complete)
+### Phase 7 — Profile Pages
 - **Saved Addresses** — Select default, edit, delete address cards
 - **Payment Methods** — Grouped by type (E-Wallet/Bank/Card/COD), select default
-- **Favourite Items** — Remove from favourites, tap to product detail
-- **My Reviews** — Rating summary, order items per review, edit review
-- **Promo & Vouchers** — 2-tab (Promos/My Vouchers), promo code input, copy code chip
-- **Help & FAQ** — Searchable accordion, grouped by category, contact support card
-- **Settings** — Notification, email, preferences, privacy toggles + account actions
-- **Loyalty & Rewards** — Points card with tier progress, redeem rewards, points history
+- **Favourite Items** — Remove from favourites, tap to product detail, empty state
+- **My Reviews** — Average rating summary, review cards with order items, edit review
+- **Promo & Vouchers** — 2-tab (Promos/My Vouchers), promo code input, color-coded cards, copy chip
+- **Help & FAQ** — Live search, accordion grouped by category, contact support card
+- **Settings** — Notification/email/preferences/privacy toggles, account actions, delete account dialog
+- **Loyalty & Rewards** — Tier progress card (crimson→gold gradient), redeem rewards, points history
 
 ## Getting Started
 
