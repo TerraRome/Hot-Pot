@@ -37,10 +37,37 @@ class HomeHeader extends StatelessWidget {
                   // Logo + title
                   const _LogoBlock(),
                   const Spacer(),
-                  // Notification icon
-                  _IconButton(
-                    icon: Icons.notifications_outlined,
-                    onTap: () {},
+                  // Notification icon with badge
+                  Stack(
+                    clipBehavior: Clip.none,
+                    children: [
+                      _IconButton(
+                        icon: Icons.notifications_outlined,
+                        onTap: () => context.push(AppRoutes.notifications),
+                      ),
+                      Positioned(
+                        top: -4,
+                        right: -4,
+                        child: Container(
+                          width: 18,
+                          height: 18,
+                          decoration: const BoxDecoration(
+                            color: AppColors.secondary,
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Center(
+                            child: Text(
+                              '3',
+                              style: TextStyle(
+                                fontSize: 10,
+                                fontWeight: FontWeight.w700,
+                                color: AppColors.secondaryText,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(width: 8),
                   // Cart icon with badge — navigates to /cart

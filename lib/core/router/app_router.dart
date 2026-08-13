@@ -16,6 +16,8 @@ import 'package:hot_pot/features/profile/presentation/pages/profile_page.dart';
 import 'package:hot_pot/features/profile/presentation/pages/edit_profile_page.dart';
 import 'package:hot_pot/features/orders/presentation/pages/invoice_page.dart';
 import 'package:hot_pot/features/orders/presentation/pages/live_tracking_page.dart';
+import 'package:hot_pot/features/notifications/presentation/pages/notification_page.dart';
+import 'package:hot_pot/features/onboarding/presentation/pages/onboarding_page.dart';
 
 /// Named route constants.
 abstract final class AppRoutes {
@@ -36,6 +38,8 @@ abstract final class AppRoutes {
   static const String editProfile = '/edit-profile';
   static const String invoice = '/invoice';
   static const String liveTracking = '/live-tracking';
+  static const String notifications = '/notifications';
+  static const String onboarding = '/onboarding';
 }
 
 /// GoRouter instance untuk seluruh app.
@@ -133,6 +137,16 @@ final appRouter = GoRouter(
       path: AppRoutes.liveTracking,
       name: 'live-tracking',
       builder: (context, state) => const LiveTrackingPage(),
+    ),
+    GoRoute(
+      path: AppRoutes.notifications,
+      name: 'notifications',
+      builder: (context, state) => const NotificationPage(),
+    ),
+    GoRoute(
+      path: AppRoutes.onboarding,
+      name: 'onboarding',
+      builder: (context, state) => const OnboardingPage(),
     ),
   ],
 );
