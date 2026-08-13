@@ -51,9 +51,9 @@ class _SplashPageState extends State<SplashPage>
 
     _ctrl.forward();
 
-    // Auto navigate ke sign in setelah 2.5 detik
+    // Auto navigate ke onboarding setelah 2.5 detik
     Future.delayed(const Duration(milliseconds: 2500), () {
-      if (mounted) context.go('/signin');
+      if (mounted) context.go('/onboarding');
     });
   }
 

@@ -353,7 +353,7 @@ class _OtpBoxState extends State<_OtpBox> {
 
     return AnimatedContainer(
       duration: const Duration(milliseconds: 150),
-      width: 46,
+      width: 48,
       height: 56,
       decoration: BoxDecoration(
         color: filled ? AppColors.primaryBg : AppColors.background,
@@ -368,25 +368,32 @@ class _OtpBoxState extends State<_OtpBox> {
         ),
       ),
       child: Center(
-        child: TextField(
-          controller: widget.controller,
-          focusNode: widget.focusNode,
-          textAlign: TextAlign.center,
-          keyboardType: TextInputType.number,
-          maxLength: 1,
-          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-          style: const TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w700,
-            color: AppColors.primary,
+        child: SizedBox(
+          width: 48,
+          height: 56,
+          child: TextField(
+            controller: widget.controller,
+            focusNode: widget.focusNode,
+            textAlign: TextAlign.center,
+            textAlignVertical: TextAlignVertical.center,
+            keyboardType: TextInputType.number,
+            maxLength: 1,
+            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+            style: const TextStyle(
+              fontSize: 22,
+              fontWeight: FontWeight.w700,
+              color: AppColors.primary,
+              height: 1.0,
+            ),
+            decoration: const InputDecoration(
+              border: InputBorder.none,
+              focusedBorder: InputBorder.none,
+              enabledBorder: InputBorder.none,
+              counterText: '',
+              contentPadding: EdgeInsets.zero,
+            ),
+            onChanged: widget.onChanged,
           ),
-          decoration: const InputDecoration(
-            border: InputBorder.none,
-            counterText: '',
-            contentPadding: EdgeInsets.zero,
-            isDense: true,
-          ),
-          onChanged: widget.onChanged,
         ),
       ),
     );

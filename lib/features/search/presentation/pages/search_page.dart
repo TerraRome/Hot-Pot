@@ -205,11 +205,12 @@ class _SearchHeader extends StatelessWidget {
                               fontSize: 14, color: AppColors.foreground),
                           decoration: const InputDecoration(
                             border: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                            enabledBorder: InputBorder.none,
                             hintText: 'Search menu, broth, ingredients…',
                             hintStyle: TextStyle(
                                 fontSize: 13,
                                 color: AppColors.textSecondary),
-                            isDense: true,
                             contentPadding: EdgeInsets.zero,
                           ),
                         ),
