@@ -29,7 +29,7 @@ A full-featured Flutter food delivery app built from scratch, covering the compl
 | 13 | Invoice | `/invoice` | PNG | ⏳ |
 | 14 | Notifications | `/notifications` | GIF | ✅ |
 | 15 | Profile | `/profile` | GIF | ✅ |
-| 16 | Edit Profile | `/edit-profile` | PNG | ⏳ |
+| 16 | Edit Profile | `/edit-profile` | GIF | ✅ |
 | 17 | Saved Addresses | `/addresses` | PNG | ⏳ |
 | 18 | Payment Methods | `/payment-methods` | PNG | ⏳ |
 | 19 | Favourites | `/favourites` | PNG | ⏳ |
@@ -67,7 +67,7 @@ A full-featured Flutter food delivery app built from scratch, covering the compl
 
 | Profile | Edit Profile | Saved Addresses | Payment Methods |
 |---------|-------------|----------------|----------------|
-| <img src="assets/gif/15_profile.gif" width="200"> | <img src="assets/screenshots/16_edit_profile.png" width="200"> | <img src="assets/screenshots/17_saved_addresses.png" width="200"> | <img src="assets/screenshots/18_payment_methods.png" width="200"> |
+| <img src="assets/gif/15_profile.gif" width="200"> | <img src="assets/gif/16_edit_profile.gif" width="200"> | <img src="assets/screenshots/17_saved_addresses.png" width="200"> | <img src="assets/screenshots/18_payment_methods.png" width="200"> |
 
 | Favourites | My Reviews | Promo & Vouchers | Help & FAQ |
 |-----------|-----------|-----------------|-----------|
