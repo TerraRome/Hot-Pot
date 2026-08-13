@@ -12,14 +12,15 @@ A Flutter mobile app for a hot pot restaurant — built as a portfolio project u
 |--------|----------------|---------|--------------|------|
 | Live filter + results | 6-category grid | Stats, menu sections | Form fields, date picker | Qty stepper, promo code |
 
-| Checkout | Order Tracking | Live Tracking | Invoice |
-|----------|---------------|---------------|---------|
-| Delivery/pickup, payment | Progress steps, history | Animated map, rider | Items, summary, payment |
+| Checkout | Order Tracking | Live Tracking | Invoice | Notifications |
+|----------|---------------|---------------|---------|---------------|
+| Delivery/pickup, payment | Progress steps, history | Animated map, rider | Items, summary, payment | All/Orders/Promos tabs |
 
 ## Features
 
 ### Phase 1 — Auth Flow
 - **Splash** — Animated dragon logo, gold divider, loading dots, auto-navigate
+- **Onboarding** — 3 animated slides, dots indicator, skip button, Get Started
 - **Sign In** — Email/phone + password, social buttons (Google/Facebook/Apple), remember me
 - **OTP Verification** — 6-box input, 60s countdown timer, auto-verify on complete
 
@@ -41,6 +42,10 @@ A Flutter mobile app for a hot pot restaurant — built as a portfolio project u
 ### Phase 5 — Profile
 - **Profile** — Stats row (Orders/Reviews/Points), menu sections, notification/dark mode toggles, sign out
 - **Edit Profile** — Full name, email, phone, birthday (date picker), gender picker, preferences section
+
+### Phase 6 — Polish & UX
+- **Notifications** — 3-tab view (All/Orders/Promos), unread badge counter, read/unread card states
+- **Onboarding** — 3-slide welcome flow with animated dots, skip, and Get Started
 
 ## Tech Stack
 
@@ -72,12 +77,13 @@ lib/
 ├── app.dart                          # Root app + scroll behavior
 ├── main.dart
 ├── core/
-│   ├── router/app_router.dart        # GoRouter — 13 routes
+│   ├── router/app_router.dart        # GoRouter — 16 routes
 │   └── theme/
 │       ├── app_colors.dart           # Design tokens
 │       └── app_theme.dart            # MaterialTheme
 └── features/
     ├── auth/                         # Splash, Sign In, OTP
+    ├── onboarding/                   # 3-slide onboarding
     ├── home/                         # Home page + widgets
     ├── search/                       # Search page
     ├── explore/                      # Category browse page
@@ -85,7 +91,8 @@ lib/
     ├── cart/                         # Cart page
     ├── checkout/                     # Checkout form page
     ├── orders/                       # Order tracking, live tracking, invoice
-    └── profile/                      # Profile, edit profile
+    ├── profile/                      # Profile, edit profile
+    └── notifications/                # Notification page
 ```
 
 ## Routes
@@ -93,6 +100,7 @@ lib/
 | Path | Page |
 |------|------|
 | `/splash` | Splash Screen |
+| `/onboarding` | Onboarding (3 slides) |
 | `/signin` | Sign In |
 | `/otp` | OTP Verification |
 | `/` | Home |
@@ -106,6 +114,7 @@ lib/
 | `/invoice` | Invoice |
 | `/profile` | Profile |
 | `/edit-profile` | Edit Profile |
+| `/notifications` | Notifications |
 
 ## Roadmap
 
@@ -115,14 +124,14 @@ lib/
 - [x] Phase 3 — Core Flow (Home, Product Detail, Cart, Checkout)
 - [x] Phase 4 — Orders & Tracking (Order Tracking, Live Tracking, Invoice)
 - [x] Phase 5 — Profile (Profile, Edit Profile)
+- [x] Phase 6 — Polish & UX (Notifications, Onboarding, notification badge)
 
-### Upcoming — Phase 6 (Polish & UX)
-- [ ] Animated page transitions
+### Upcoming — Phase 7
 - [ ] Skeleton loading states
-- [ ] Error & empty states
-- [ ] Notification page with badge counter
-- [ ] Onboarding / welcome screens
+- [ ] Error & empty states for network failures
 - [ ] Settings page (full preferences)
+- [ ] Favorites / Wishlist page
+- [ ] Loyalty points & rewards page
 
 ## Getting Started
 
@@ -152,6 +161,10 @@ fvm use stable
 fvm flutter pub get
 fvm flutter run -d <device-id>
 ```
+
+## Business Flow
+
+See [FLOW.md](./FLOW.md) for the full business process flow diagram.
 
 ## Development Notes
 
