@@ -140,18 +140,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           value: 'Medium',
                           onTap: () {},
                         ),
-                        _PreferenceRow(
-                          icon: Icons.notifications_none_rounded,
-                          label: 'Order Notifications',
-                          value: 'Enabled',
-                          onTap: () {},
-                        ),
-                        _PreferenceRow(
-                          icon: Icons.language_outlined,
-                          label: 'Language',
-                          value: 'English',
-                          onTap: () {},
-                        ),
                         const SizedBox(height: 32),
                       ],
                     ),

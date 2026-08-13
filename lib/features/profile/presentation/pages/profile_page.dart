@@ -82,23 +82,10 @@ class ProfilePage extends StatelessWidget {
                   onTap: () {},
                 ),
                 const SizedBox(height: 12),
-                _SectionLabel('Preferences'),
+                _SectionLabel('General'),
                 _MenuItem(
-                  icon: Icons.notifications_none_rounded,
-                  label: 'Notifications',
-                  trailing: _Toggle(),
-                  onTap: () => context.push('/settings'),
-                ),
-                _MenuItem(
-                  icon: Icons.dark_mode_outlined,
-                  label: 'Dark Mode',
-                  trailing: _Toggle(),
-                  onTap: () => context.push('/settings'),
-                ),
-                _MenuItem(
-                  icon: Icons.language_outlined,
-                  label: 'Language',
-                  subtitle: 'English',
+                  icon: Icons.settings_outlined,
+                  label: 'Settings',
                   onTap: () => context.push('/settings'),
                 ),
                 const SizedBox(height: 24),
@@ -371,17 +358,13 @@ class _MenuItem extends StatelessWidget {
     required this.icon,
     required this.label,
     required this.onTap,
-    this.subtitle,
     this.badge,
-    this.trailing,
   });
 
   final IconData icon;
   final String label;
   final VoidCallback onTap;
-  final String? subtitle;
   final String? badge;
-  final Widget? trailing;
 
   @override
   Widget build(BuildContext context) {
@@ -407,26 +390,13 @@ class _MenuItem extends StatelessWidget {
             ),
             const SizedBox(width: 12),
             Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    label,
-                    style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.foreground,
-                    ),
-                  ),
-                  if (subtitle != null)
-                    Text(
-                      subtitle!,
-                      style: const TextStyle(
-                        fontSize: 12,
-                        color: AppColors.textSecondary,
-                      ),
-                    ),
-                ],
+              child: Text(
+                label,
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  color: AppColors.foreground,
+                ),
               ),
             ),
             if (badge != null)
@@ -446,35 +416,12 @@ class _MenuItem extends StatelessWidget {
                   ),
                 ),
               )
-            else if (trailing != null)
-              trailing!
             else
               const Icon(Icons.chevron_right,
                   size: 18, color: AppColors.textSecondary),
           ],
         ),
       ),
-    );
-  }
-}
-
-// ── Toggle ────────────────────────────────────────────────────────────────────
-
-class _Toggle extends StatefulWidget {
-  @override
-  State<_Toggle> createState() => _ToggleState();
-}
-
-class _ToggleState extends State<_Toggle> {
-  bool _value = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return Switch(
-      value: _value,
-      onChanged: (v) => setState(() => _value = v),
-      activeThumbColor: AppColors.primary,
-      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
     );
   }
 }

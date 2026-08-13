@@ -26,6 +26,10 @@ class _SettingsPageState extends State<SettingsPage> {
   bool _analytics = true;
   bool _personalized = true;
 
+  // Appearance
+  bool _darkMode = false;
+  String _language = 'English';
+
   @override
   void initState() {
     super.initState();
@@ -128,6 +132,30 @@ class _SettingsPageState extends State<SettingsPage> {
                     onChanged: (v) => setState(() => _personalized = v),
                   ),
                 ]),
+
+                // Appearance
+                _SectionHeader(label: 'APPEARANCE'),
+                _ToggleSection(children: [
+                  _ToggleTile(
+                    icon: Icons.dark_mode_outlined,
+                    title: 'Dark Mode',
+                    subtitle: 'Switch to a darker color theme',
+                    value: _darkMode,
+                    onChanged: (v) => setState(() => _darkMode = v),
+                  ),
+                ]),
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: _ActionTile(
+                      icon: Icons.language_outlined,
+                      title: 'Language',
+                      subtitle: _language,
+                      onTap: () {},
+                      color: AppColors.foreground,
+                    ),
+                  ),
+                ),
 
                 // Account actions
                 _SectionHeader(label: 'ACCOUNT'),
