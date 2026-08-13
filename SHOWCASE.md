@@ -8,6 +8,46 @@ A full-featured Flutter food delivery app built from scratch, covering the compl
 
 ---
 
+## Screenshots
+
+### Auth & Onboarding
+
+| Splash | Onboarding | Sign In | OTP |
+|--------|-----------|---------|-----|
+| ![splash](assets/screenshots/01_splash.png) | ![onboarding](assets/screenshots/02_onboarding_slide1.png) | ![signin](assets/screenshots/03_signin.png) | ![otp](assets/screenshots/04_otp.png) |
+
+### Browse & Discovery
+
+| Home | Search | Search Results | Category Browse |
+|------|--------|---------------|----------------|
+| ![home](assets/screenshots/05_home.png) | ![search](assets/screenshots/06_search.png) | ![search results](assets/screenshots/06_search_results.png) | ![category](assets/screenshots/07_category.png) |
+
+### Order Flow
+
+| Product Detail | Cart | Checkout | Order Tracking |
+|---------------|------|---------|---------------|
+| ![product](assets/screenshots/08_product_detail.png) | ![cart](assets/screenshots/09_cart.png) | ![checkout](assets/screenshots/10_checkout.png) | ![orders](assets/screenshots/11_order_tracking.png) |
+
+| Live Tracking | Invoice | Notifications |
+|--------------|---------|--------------|
+| ![live](assets/screenshots/12_live_tracking.png) | ![invoice](assets/screenshots/13_invoice.png) | ![notif](assets/screenshots/14_notifications.png) |
+
+### Profile & Account
+
+| Profile | Edit Profile | Saved Addresses | Payment Methods |
+|---------|-------------|----------------|----------------|
+| ![profile](assets/screenshots/15_profile.png) | ![edit](assets/screenshots/16_edit_profile.png) | ![addresses](assets/screenshots/17_saved_addresses.png) | ![payment](assets/screenshots/18_payment_methods.png) |
+
+| Favourites | My Reviews | Promo & Vouchers | Help & FAQ |
+|-----------|-----------|-----------------|-----------|
+| ![favs](assets/screenshots/19_favourites.png) | ![reviews](assets/screenshots/20_my_reviews.png) | ![promos](assets/screenshots/21_promo_vouchers.png) | ![faq](assets/screenshots/22_help_faq.png) |
+
+| Settings | Loyalty & Rewards |
+|---------|------------------|
+| ![settings](assets/screenshots/23_settings.png) | ![loyalty](assets/screenshots/24_loyalty.png) |
+
+---
+
 ## What This Project Demonstrates
 
 | Area | Details |
