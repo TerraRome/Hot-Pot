@@ -30,7 +30,7 @@ A full-featured Flutter food delivery app built from scratch, covering the compl
 | 14 | Notifications | `/notifications` | GIF | ✅ |
 | 15 | Profile | `/profile` | GIF | ✅ |
 | 16 | Edit Profile | `/edit-profile` | GIF | ✅ |
-| 17 | Saved Addresses | `/addresses` | PNG | ⏳ |
+| 17 | Saved Addresses | `/addresses` | PNG | ✅ |
 | 18 | Payment Methods | `/payment-methods` | PNG | ⏳ |
 | 19 | Favourites | `/favourites` | PNG | ⏳ |
 | 20 | My Reviews | `/reviews` | PNG | ⏳ |
