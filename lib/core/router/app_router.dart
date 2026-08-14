@@ -10,6 +10,8 @@ import 'package:hot_pot/features/checkout/presentation/pages/checkout_page.dart'
 import 'package:hot_pot/features/auth/presentation/pages/splash_page.dart';
 import 'package:hot_pot/features/auth/presentation/pages/sign_in_page.dart';
 import 'package:hot_pot/features/auth/presentation/pages/otp_page.dart';
+import 'package:hot_pot/features/auth/presentation/pages/forgot_password_page.dart';
+import 'package:hot_pot/features/auth/presentation/pages/register_page.dart';
 import 'package:hot_pot/features/search/presentation/pages/search_page.dart';
 import 'package:hot_pot/features/explore/presentation/pages/category_browse_page.dart';
 import 'package:hot_pot/features/profile/presentation/pages/profile_page.dart';
@@ -32,6 +34,8 @@ abstract final class AppRoutes {
   static const String splash = '/splash';
   static const String signIn = '/signin';
   static const String otp = '/otp';
+  static const String forgotPassword = '/forgot-password';
+  static const String register = '/register';
   static const String home = '/';
   static const String about = '/about';
   static const String projects = '/projects';
@@ -77,6 +81,16 @@ final appRouter = GoRouter(
       path: AppRoutes.otp,
       name: 'otp',
       builder: (context, state) => const OtpPage(),
+    ),
+    GoRoute(
+      path: AppRoutes.forgotPassword,
+      name: 'forgot-password',
+      builder: (context, state) => const ForgotPasswordPage(),
+    ),
+    GoRoute(
+      path: AppRoutes.register,
+      name: 'register',
+      builder: (context, state) => const RegisterPage(),
     ),
     GoRoute(
       path: AppRoutes.home,

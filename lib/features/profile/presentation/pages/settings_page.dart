@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hot_pot/core/i18n/locale_provider.dart';
 import 'package:hot_pot/core/theme/app_colors.dart';
+import 'package:hot_pot/generated/l10n/app_localizations.dart';
 
-class SettingsPage extends StatefulWidget {
+class SettingsPage extends ConsumerStatefulWidget {
   const SettingsPage({super.key});
 
   @override
-  State<SettingsPage> createState() => _SettingsPageState();
+  ConsumerState<SettingsPage> createState() => _SettingsPageState();
 }
 
-class _SettingsPageState extends State<SettingsPage> {
+class _SettingsPageState extends ConsumerState<SettingsPage> {
   // Notifications
   bool _pushOrders = true;
   bool _pushPromos = true;
@@ -41,17 +44,18 @@ class _SettingsPageState extends State<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: AppColors.background,
       body: Column(
         children: [
-          _PageHeader(title: 'Settings', icon: '⚙️'),
+          _PageHeader(title: l10n.settings, icon: '⚙️'),
           Expanded(
             child: CustomScrollView(
               physics: const ClampingScrollPhysics(),
               slivers: [
                 // Notifications
-                _SectionHeader(label: 'NOTIFICATIONS'),
+                _SectionHeader(label: l10n.settingsNotifications),
                 _ToggleSection(children: [
                   _ToggleTile(
                     icon: Icons.shopping_bag_outlined,
@@ -77,7 +81,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 ]),
 
                 // Email
-                _SectionHeader(label: 'EMAIL'),
+                _SectionHeader(label: l10n.settingsEmail),
                 _ToggleSection(children: [
                   _ToggleTile(
                     icon: Icons.receipt_outlined,
@@ -96,7 +100,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 ]),
 
                 // Preferences
-                _SectionHeader(label: 'PREFERENCES'),
+                _SectionHeader(label: l10n.settingsPreferences),
                 _ToggleSection(children: [
                   _ToggleTile(
                     icon: Icons.history_rounded,
@@ -115,7 +119,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 ]),
 
                 // Privacy
-                _SectionHeader(label: 'PRIVACY'),
+                _SectionHeader(label: l10n.settingsPrivacy),
                 _ToggleSection(children: [
                   _ToggleTile(
                     icon: Icons.bar_chart_rounded,
@@ -134,12 +138,12 @@ class _SettingsPageState extends State<SettingsPage> {
                 ]),
 
                 // Appearance
-                _SectionHeader(label: 'APPEARANCE'),
+                _SectionHeader(label: l10n.settingsAppearance),
                 _ToggleSection(children: [
                   _ToggleTile(
                     icon: Icons.dark_mode_outlined,
-                    title: 'Dark Mode',
-                    subtitle: 'Switch to a darker color theme',
+                    title: l10n.darkMode,
+                    subtitle: l10n.darkModeSubtitle,
                     value: _darkMode,
                     onChanged: (v) => setState(() => _darkMode = v),
                   ),
@@ -149,9 +153,9 @@ class _SettingsPageState extends State<SettingsPage> {
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: _ActionTile(
                       icon: Icons.language_outlined,
-                      title: 'Language',
+                      title: l10n.language,
                       subtitle: _language,
-                      onTap: () {},
+                      onTap: _showLanguagePicker,
                       color: AppColors.foreground,
                     ),
                   ),
@@ -220,6 +224,54 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  void _showLanguagePicker() {
+    final l10n = AppLocalizations.of(context)!;
+    showModalBottomSheet<void>(
+      context: context,
+      backgroundColor: AppColors.surface,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (sheetContext) => SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text(
+                'Language',
+                style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.foreground,
+                ),
+              ),
+              const SizedBox(height: 12),
+              _LanguageOption(
+                label: l10n.languageEnglish,
+                selected: _language == l10n.languageEnglish,
+                onTap: () {
+                  setState(() => _language = l10n.languageEnglish);
+                  ref.read(localeProvider.notifier).set(const Locale('en'));
+                  Navigator.pop(sheetContext);
+                },
+              ),
+              _LanguageOption(
+                label: l10n.languageIndonesian,
+                selected: _language == l10n.languageIndonesian,
+                onTap: () {
+                  setState(() => _language = l10n.languageIndonesian);
+                  ref.read(localeProvider.notifier).set(const Locale('id'));
+                  Navigator.pop(sheetContext);
+                },
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -435,6 +487,62 @@ class _ActionTile extends StatelessWidget {
             ),
             Icon(Icons.arrow_forward_ios_rounded,
                 size: 14, color: AppColors.textSecondary),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// ── Shared header ─────────────────────────────────────────────────────────────
+
+class _LanguageOption extends StatelessWidget {
+  const _LanguageOption({
+    required this.label,
+    required this.selected,
+    required this.onTap,
+  });
+
+  final String label;
+  final bool selected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(12),
+      child: Container(
+        width: double.infinity,
+        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        decoration: BoxDecoration(
+          color: selected ? AppColors.primaryBg : Colors.transparent,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(
+            color: selected ? AppColors.primary : AppColors.borderDivider,
+          ),
+        ),
+        child: Row(
+          children: [
+            Icon(
+              selected
+                  ? Icons.check_circle_rounded
+                  : Icons.circle_outlined,
+              size: 18,
+              color: selected ? AppColors.primary : AppColors.textSecondary,
+            ),
+            const SizedBox(width: 10),
+            Text(
+              label,
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
+                color: selected
+                    ? AppColors.primary
+                    : AppColors.foreground,
+              ),
+            ),
           ],
         ),
       ),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hot_pot/core/theme/app_colors.dart';
+import 'package:hot_pot/generated/l10n/app_localizations.dart';
 
 class OtpPage extends StatefulWidget {
   const OtpPage({super.key});
@@ -74,6 +75,7 @@ class _OtpPageState extends State<OtpPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: const Color(0xFFF3F4F6),
       body: SafeArea(
@@ -151,18 +153,18 @@ class _OtpPageState extends State<OtpPage> {
 
                           const SizedBox(height: 20),
 
-                          const Text(
-                            'Check your Email',
-                            style: TextStyle(
+                          Text(
+                            l10n.otpTitle,
+                            style: const TextStyle(
                               fontSize: 22,
                               fontWeight: FontWeight.w700,
                               color: AppColors.foreground,
                             ),
                           ),
                           const SizedBox(height: 8),
-                          const Text(
-                            "We've sent a 6-digit confirmation code to your inbox. It expires in 10 minutes.",
-                            style: TextStyle(
+                          Text(
+                            l10n.otpSubtitle,
+                            style: const TextStyle(
                               fontSize: 13,
                               color: AppColors.textSecondary,
                               height: 1.5,
@@ -185,8 +187,8 @@ class _OtpPageState extends State<OtpPage> {
                           // ── Timer ─────────────────────────────────────
                           Text(
                             _countdown > 0
-                                ? 'Code expires in 0:${_countdown.toString().padLeft(2, '0')}'
-                                : 'Code expired',
+                                ? l10n.otpCodeExpiresIn(_countdown)
+                                : l10n.otpCodeExpired,
                             style: TextStyle(
                               fontSize: 12,
                               color: _countdown > 0
@@ -224,9 +226,9 @@ class _OtpPageState extends State<OtpPage> {
                                         strokeWidth: 2.5,
                                       ),
                                     )
-                                  : const Text(
-                                      'Verify & Continue',
-                                      style: TextStyle(
+                                  : Text(
+                                      l10n.otpVerify,
+                                      style: const TextStyle(
                                         fontSize: 15,
                                         fontWeight: FontWeight.w600,
                                       ),
@@ -240,7 +242,7 @@ class _OtpPageState extends State<OtpPage> {
                           GestureDetector(
                             onTap: _countdown <= 0 ? _startTimer : null,
                             child: Text(
-                              'Resend code to email',
+                              l10n.otpResend,
                               style: TextStyle(
                                 fontSize: 13,
                                 fontWeight: FontWeight.w500,
@@ -271,9 +273,9 @@ class _OtpPageState extends State<OtpPage> {
                             color: AppColors.textSecondary.withValues(alpha: 0.7),
                           ),
                           const SizedBox(width: 6),
-                          const Text(
-                            'Secure and encrypted verification',
-                            style: TextStyle(
+                          Text(
+                            l10n.otpSecure,
+                            style: const TextStyle(
                               fontSize: 11,
                               color: AppColors.textSecondary,
                             ),
@@ -374,9 +376,9 @@ class _OtpInputFieldState extends State<_OtpInputField> {
                 child: Center(
                   child: hasDigit
                       ? Text(
-                          code[i],
+                          '•',
                           style: const TextStyle(
-                            fontSize: 22,
+                            fontSize: 30,
                             fontWeight: FontWeight.w700,
                             color: AppColors.primary,
                             height: 1.0,

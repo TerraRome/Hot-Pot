@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hot_pot/core/theme/app_colors.dart';
+import 'package:hot_pot/generated/l10n/app_localizations.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
@@ -35,7 +37,7 @@ class _SignInPageState extends State<SignInPage> {
 
   void _onSignIn() async {
     setState(() => _isLoading = true);
-    await Future.delayed(const Duration(milliseconds: 800));
+    await Future<void>.delayed(const Duration(milliseconds: 800));
     if (mounted) {
       setState(() => _isLoading = false);
       context.push('/otp');
@@ -44,6 +46,7 @@ class _SignInPageState extends State<SignInPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: AppColors.background,
       body: SafeArea(
@@ -106,18 +109,18 @@ class _SignInPageState extends State<SignInPage> {
                     const SizedBox(height: 32),
 
                     // ── Title ─────────────────────────────────────────
-                    const Text(
-                      'Sign in',
-                      style: TextStyle(
+                    Text(
+                      l10n.signInTitle,
+                      style: const TextStyle(
                         fontSize: 28,
                         fontWeight: FontWeight.w700,
                         color: AppColors.foreground,
                       ),
                     ),
                     const SizedBox(height: 6),
-                    const Text(
-                      'Welcome back! Order your favourite hot pot.',
-                      style: TextStyle(
+                    Text(
+                      l10n.signInSubtitle,
+                      style: const TextStyle(
                         fontSize: 13,
                         color: AppColors.textSecondary,
                       ),
@@ -126,11 +129,11 @@ class _SignInPageState extends State<SignInPage> {
                     const SizedBox(height: 32),
 
                     // ── Email / Phone ─────────────────────────────────
-                    _FieldLabel(label: 'Email / Phone number'),
+                    _FieldLabel(label: l10n.emailPhoneLabel),
                     const SizedBox(height: 6),
                     _InputField(
                       controller: _emailCtrl,
-                      hint: 'you@example.com',
+                      hint: l10n.emailHint,
                       keyboardType: TextInputType.emailAddress,
                       prefixIcon: Icons.person_outline,
                     ),
@@ -138,7 +141,7 @@ class _SignInPageState extends State<SignInPage> {
                     const SizedBox(height: 20),
 
                     // ── Password ──────────────────────────────────────
-                    _FieldLabel(label: 'Password'),
+                    _FieldLabel(label: l10n.passwordLabel),
                     const SizedBox(height: 6),
                     _InputField(
                       controller: _passwordCtrl,
@@ -185,9 +188,9 @@ class _SignInPageState extends State<SignInPage> {
                                     : null,
                               ),
                               const SizedBox(width: 8),
-                              const Text(
-                                'Remember me',
-                                style: TextStyle(
+                              Text(
+                                l10n.rememberMe,
+                                style: const TextStyle(
                                   fontSize: 13,
                                   color: AppColors.textSecondary,
                                 ),
@@ -196,10 +199,10 @@ class _SignInPageState extends State<SignInPage> {
                           ),
                         ),
                         GestureDetector(
-                          onTap: () {},
-                          child: const Text(
-                            'Forgot password?',
-                            style: TextStyle(
+                          onTap: () => context.push('/forgot-password'),
+                          child: Text(
+                            l10n.forgotPassword,
+                            style: const TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.w600,
                               color: AppColors.primary,
@@ -234,9 +237,9 @@ class _SignInPageState extends State<SignInPage> {
                                   strokeWidth: 2.5,
                                 ),
                               )
-                            : const Text(
-                                'Sign in',
-                                style: TextStyle(
+                            : Text(
+                                l10n.signInButton,
+                                style: const TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.w700,
                                 ),
@@ -254,7 +257,7 @@ class _SignInPageState extends State<SignInPage> {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 12),
                           child: Text(
-                            'or sign in with',
+                            l10n.orSignInWith,
                             style: TextStyle(
                               fontSize: 12,
                               color: AppColors.textSecondary
@@ -273,13 +276,19 @@ class _SignInPageState extends State<SignInPage> {
                     Row(
                       children: [
                         _SocialButton(
-                            emoji: '🔵', label: 'Google', onTap: () {}),
+                            logo: 'assets/icons/google.svg',
+                            label: 'Google',
+                            onTap: () {}),
                         const SizedBox(width: 12),
                         _SocialButton(
-                            emoji: '📘', label: 'Facebook', onTap: () {}),
+                            logo: 'assets/icons/facebook.svg',
+                            label: 'Facebook',
+                            onTap: () {}),
                         const SizedBox(width: 12),
                         _SocialButton(
-                            emoji: '🍎', label: 'Apple', onTap: () {}),
+                            logo: 'assets/icons/apple.svg',
+                            label: 'Apple',
+                            onTap: () {}),
                       ],
                     ),
 
@@ -290,18 +299,18 @@ class _SignInPageState extends State<SignInPage> {
                       padding: const EdgeInsets.only(bottom: 24),
                       child: Center(
                         child: GestureDetector(
-                          onTap: () {},
+                          onTap: () => context.push('/register'),
                           child: RichText(
-                            text: const TextSpan(
-                              text: "Don't have an account? ",
-                              style: TextStyle(
+                            text: TextSpan(
+                              text: l10n.noAccount,
+                              style: const TextStyle(
                                 fontSize: 13,
                                 color: AppColors.textSecondary,
                               ),
                               children: [
                                 TextSpan(
-                                  text: 'Register',
-                                  style: TextStyle(
+                                  text: l10n.register,
+                                  style: const TextStyle(
                                     color: AppColors.primary,
                                     fontWeight: FontWeight.w700,
                                   ),
@@ -412,12 +421,12 @@ class _InputField extends StatelessWidget {
 
 class _SocialButton extends StatelessWidget {
   const _SocialButton({
-    required this.emoji,
+    required this.logo,
     required this.label,
     required this.onTap,
   });
 
-  final String emoji;
+  final String logo;
   final String label;
   final VoidCallback onTap;
 
@@ -435,8 +444,12 @@ class _SocialButton extends StatelessWidget {
           ),
           child: Column(
             children: [
-              Text(emoji, style: const TextStyle(fontSize: 20)),
-              const SizedBox(height: 4),
+              SizedBox(
+                width: 22,
+                height: 22,
+                child: SvgPicture.asset(logo),
+              ),
+              const SizedBox(height: 6),
               Text(
                 label,
                 style: const TextStyle(

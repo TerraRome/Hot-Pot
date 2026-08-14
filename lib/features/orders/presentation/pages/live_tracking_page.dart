@@ -96,24 +96,72 @@ class _LiveTrackingPageState extends State<LiveTrackingPage>
                         Expanded(
                           child: Container(
                             padding: const EdgeInsets.symmetric(
-                                horizontal: 14, vertical: 10),
+                                horizontal: 14, vertical: 8),
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(12),
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.black.withValues(alpha: 0.1),
+                                  color:
+                                      Colors.black.withValues(alpha: 0.1),
                                   blurRadius: 8,
                                 ),
                               ],
                             ),
-                            child: const Text(
-                              'Live Tracking',
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w700,
-                                color: AppColors.foreground,
-                              ),
+                            child: Row(
+                              children: [
+                                const Expanded(
+                                  child: Text(
+                                    'Live Tracking',
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w700,
+                                      color: AppColors.foreground,
+                                    ),
+                                  ),
+                                ),
+                                AnimatedBuilder(
+                                  animation: _pulseAnim,
+                                  builder: (context, _) => Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 8, vertical: 3),
+                                    decoration: BoxDecoration(
+                                      color: Colors.red,
+                                      borderRadius: BorderRadius.circular(20),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.red.withValues(
+                                              alpha: 0.3 + _pulseAnim.value * 0.2),
+                                          blurRadius: 4 + _pulseAnim.value * 4,
+                                        ),
+                                      ],
+                                    ),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Container(
+                                          width: 6,
+                                          height: 6,
+                                          decoration: const BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                        const SizedBox(width: 4),
+                                        const Text(
+                                          'LIVE',
+                                          style: TextStyle(
+                                            fontSize: 10,
+                                            fontWeight: FontWeight.w800,
+                                            color: Colors.white,
+                                            letterSpacing: 0.5,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ),
@@ -185,6 +233,8 @@ class _LiveTrackingPageState extends State<LiveTrackingPage>
                             ),
                           ),
                         ),
+                        const SizedBox(height: 16),
+                        _StatusHero(pulseAnim: _pulseAnim),
                         const SizedBox(height: 16),
                         _RiderCard(),
                         const SizedBox(height: 16),
@@ -284,6 +334,99 @@ class _MapPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_MapPainter old) => false;
+}
+
+// ── Status hero ────────────────────────────────────────────────────────────────
+
+class _StatusHero extends StatelessWidget {
+  const _StatusHero({required this.pulseAnim});
+  final Animation<double> pulseAnim;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [AppColors.primary, AppColors.primaryHover],
+        ),
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.primary.withValues(alpha: 0.3),
+            blurRadius: 16,
+            offset: const Offset(0, 6),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          // Pulsing rider icon
+          AnimatedBuilder(
+            animation: pulseAnim,
+            builder: (context, _) => Container(
+              width: 56,
+              height: 56,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.white.withValues(alpha: 0.2 + (pulseAnim.value - 0.85) * 1.5),
+                border: Border.all(
+                  color: Colors.white.withValues(alpha: 0.5),
+                  width: 2,
+                ),
+              ),
+              child: const Center(
+                child: Text('🛵', style: TextStyle(fontSize: 26)),
+              ),
+            ),
+          ),
+          const SizedBox(width: 14),
+          const Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Your order is on the way!',
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w800,
+                    color: Colors.white,
+                  ),
+                ),
+                SizedBox(height: 4),
+                Text(
+                  'Ahmad is riding to you',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Color(0xE6FFFFFF),
+                  ),
+                ),
+                SizedBox(height: 6),
+                Row(
+                  children: [
+                    Icon(Icons.access_time_rounded,
+                        size: 13, color: Colors.white),
+                    SizedBox(width: 4),
+                    Text(
+                      'Arriving in ~12 min',
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }
 
 // ── Rider marker ──────────────────────────────────────────────────────────────
@@ -599,13 +742,14 @@ class _ProgressBar extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: 4),
+                const SizedBox(height: 6),
                 Text(
                   _steps[stepIndex].label,
                   style: TextStyle(
-                    fontSize: 9,
+                    fontSize: 10,
+                    height: 1.2,
                     fontWeight:
-                        active ? FontWeight.w700 : FontWeight.w400,
+                        active ? FontWeight.w700 : FontWeight.w500,
                     color: done
                         ? AppColors.primary
                         : AppColors.textSecondary,

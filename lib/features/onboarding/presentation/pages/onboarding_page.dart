@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hot_pot/core/theme/app_colors.dart';
+import 'package:hot_pot/generated/l10n/app_localizations.dart';
 
 class OnboardingPage extends StatefulWidget {
   const OnboardingPage({super.key});
@@ -13,33 +14,36 @@ class OnboardingPage extends StatefulWidget {
 class _OnboardingPageState extends State<OnboardingPage> {
   final _pageCtrl = PageController();
   int _current = 0;
+  late List<_Slide> _slides;
 
-  static const _slides = [
-    _Slide(
-      emoji: '🐉',
-      title: 'Welcome to\nCrimson Dragon',
-      subtitle:
-          'Authentic hot pot experience delivered to your door — or dine with us in style.',
-      bg: Color(0xFF9A0B17),
-      accent: Color(0xFFD4AF37),
-    ),
-    _Slide(
-      emoji: '🍲',
-      title: 'Craft Your\nPerfect Hot Pot',
-      subtitle:
-          'Choose from 6 broth bases, premium meats, fresh seafood, and seasonal vegetables.',
-      bg: Color(0xFF7B0D13),
-      accent: Color(0xFFE8C84A),
-    ),
-    _Slide(
-      emoji: '🛵',
-      title: 'Track Every\nStep, Live',
-      subtitle:
-          'Real-time order tracking from kitchen to your table. Always fresh, always on time.',
-      bg: Color(0xFF5C0A0F),
-      accent: Color(0xFFD4AF37),
-    ),
-  ];
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final l10n = AppLocalizations.of(context)!;
+    _slides = [
+      _Slide(
+        emoji: '🐉',
+        title: l10n.onboardingWelcomeTitle,
+        subtitle: l10n.onboardingWelcomeSubtitle,
+        bg: const Color(0xFF9A0B17),
+        accent: const Color(0xFFD4AF37),
+      ),
+      _Slide(
+        emoji: '🍲',
+        title: l10n.onboardingCraftTitle,
+        subtitle: l10n.onboardingCraftSubtitle,
+        bg: const Color(0xFF7B0D13),
+        accent: const Color(0xFFE8C84A),
+      ),
+      _Slide(
+        emoji: '🛵',
+        title: l10n.onboardingTrackTitle,
+        subtitle: l10n.onboardingTrackSubtitle,
+        bg: const Color(0xFF5C0A0F),
+        accent: const Color(0xFFD4AF37),
+      ),
+    ];
+  }
 
   @override
   void initState() {
@@ -71,6 +75,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       body: Stack(
         children: [
@@ -99,9 +104,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
                         color: Colors.white.withValues(alpha: 0.15),
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      child: const Text(
-                        'Skip',
-                        style: TextStyle(
+                      child: Text(
+                        l10n.onboardingSkip,
+                        style: const TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.w600,
                           color: Colors.white,
@@ -170,8 +175,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
                           children: [
                             Text(
                               _current == _slides.length - 1
-                                  ? 'Get Started'
-                                  : 'Next',
+                                  ? l10n.onboardingGetStarted
+                                  : l10n.onboardingNext,
                               style: const TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w700,

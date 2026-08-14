@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hot_pot/generated/l10n/app_localizations.dart';
 import 'package:hot_pot/core/router/app_router.dart';
 import 'package:hot_pot/core/theme/app_theme.dart';
 import 'package:hot_pot/core/constants/app_constants.dart';
+import 'package:hot_pot/core/i18n/locale_provider.dart';
 
 /// Disable Android 12+ overscroll stretch effect globally.
 class _NoStretchScrollBehavior extends MaterialScrollBehavior {
@@ -29,6 +31,9 @@ class App extends ConsumerWidget {
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
       themeMode: ThemeMode.system,
+      locale: ref.watch(localeProvider),
+      supportedLocales: AppLocalizations.supportedLocales,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
       scrollBehavior: const _NoStretchScrollBehavior(),
       routerConfig: appRouter,
     );

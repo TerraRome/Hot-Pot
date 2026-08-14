@@ -24,9 +24,11 @@ A Flutter mobile app for a hot pot restaurant — built as a portfolio project u
 
 ### Phase 1 — Auth Flow
 - **Splash** — Animated dragon logo, gold divider, loading dots, auto-navigate
-- **Onboarding** — 3 animated slides, dots indicator, skip button, Get Started
-- **Sign In** — Email/phone + password, social buttons (Google/Facebook/Apple), remember me
-- **OTP Verification** — 6-box input, 60s countdown timer, auto-verify on complete
+- **Onboarding** — 3 animated slides, dots indicator, skip button, Get Started, localized (EN/ID)
+- **Sign In** — Email/phone + password, social buttons (Google/Facebook/Apple SVG logos), remember me
+- **Register** — Full name/email/phone/password/confirm fields, terms checkbox, social auth
+- **Forgot Password** — Email input, send reset link, back to sign-in
+- **OTP Verification** — 6-box masked input (password-style dots), blinking cursor, 60s countdown timer, auto-verify on complete
 
 ### Phase 2 — Search & Browse
 - **Search** — Live filtering, category chips (All/Broth/Meat/Seafood/Veggie/Noodle), result list with emoji avatar + category badge, empty state
@@ -40,12 +42,13 @@ A Flutter mobile app for a hot pot restaurant — built as a portfolio project u
 
 ### Phase 4 — Orders & Tracking
 - **Order Tracking** — Active orders tab with progress steps, rider contact, order history with reorder
-- **Live Tracking** — Animated CustomPainter map, pulsing rider marker, ETA chip, progress steps, rider contact card
+- **Live Tracking** — Animated CustomPainter map, pulsing rider marker, LIVE badge header, status hero card, ETA chip, progress steps, rider contact card
 - **Invoice** — Order info, items list, price summary, payment status badge, download & home actions
 
 ### Phase 5 — Profile
-- **Profile** — Stats row (Orders/Reviews/Points), menu sections, notification/dark mode toggles, sign out
-- **Edit Profile** — Full name, email, phone, birthday (date picker), gender picker, preferences section
+- **Profile** — Stats row (Orders/Reviews/Points), menu sections, settings shortcut, sign out
+- **Edit Profile** — Full name, email, phone, birthday (date picker), gender picker, spice preference
+- **Settings** — Notification/email/preferences/privacy toggles, dark mode, language switcher (EN/ID), account actions
 
 ### Phase 6 — Polish & UX
 - **Notifications** — 3-tab view (All/Orders/Promos), unread badge counter, read/unread card states
@@ -59,6 +62,8 @@ A Flutter mobile app for a hot pot restaurant — built as a portfolio project u
 | Navigation | go_router ^17.5.0 |
 | State Management | flutter_riverpod ^3.0.3 |
 | Networking | dio ^5.11.0 |
+| Localization | flutter_localizations, intl, flutter gen-l10n |
+| Vector Graphics | flutter_svg ^2.2.0 |
 | Code Generation | freezed, json_serializable, riverpod_generator |
 | Font | Inter (Regular, Medium, SemiBold, Bold) |
 
@@ -81,7 +86,7 @@ lib/
 ├── app.dart                          # Root app + scroll behavior
 ├── main.dart
 ├── core/
-│   ├── router/app_router.dart        # GoRouter — 24 routes
+│   ├── router/app_router.dart        # GoRouter — 26 routes
 │   └── theme/
 │       ├── app_colors.dart           # Design tokens
 │       └── app_theme.dart            # MaterialTheme
@@ -109,6 +114,8 @@ lib/
 | `/onboarding` | Onboarding (3 slides) |
 | `/signin` | Sign In |
 | `/otp` | OTP Verification |
+| `/forgot-password` | Forgot Password |
+| `/register` | Register |
 | `/` | Home |
 | `/search` | Search |
 | `/category` | Category Browse |
@@ -139,16 +146,18 @@ lib/
 - [x] Phase 4 — Orders & Tracking (Order Tracking, Live Tracking, Invoice)
 - [x] Phase 5 — Profile (Profile, Edit Profile)
 - [x] Phase 6 — Polish & UX (Notifications, Onboarding, notification badge)
+- [x] Phase 7 — Profile Pages (Addresses, Payments, Favourites, Reviews, Promos, FAQ, Settings, Loyalty)
+- [x] Phase 8 — Auth & Localization
+  - [x] Forgot Password page + route
+  - [x] Register page + route
+  - [x] Social login SVG logos (Google/Facebook/Apple)
+  - [x] OTP masked as password input
+  - [x] All header bell icons navigate to Notifications
+  - [x] Live Tracking UI polish (LIVE badge, status hero, larger step labels)
+  - [x] Bilingual localization (English/Indonesian) via `flutter gen-l10n` + Riverpod locale switch
 
-### Phase 7 — Profile Pages
-- **Saved Addresses** — Select default, edit, delete address cards
-- **Payment Methods** — Grouped by type (E-Wallet/Bank/Card/COD), select default
-- **Favourite Items** — Remove from favourites, tap to product detail, empty state
-- **My Reviews** — Average rating summary, review cards with order items, edit review
-- **Promo & Vouchers** — 2-tab (Promos/My Vouchers), promo code input, color-coded cards, copy chip
-- **Help & FAQ** — Live search, accordion grouped by category, contact support card
-- **Settings** — Notification/email/preferences/privacy toggles, account actions, delete account dialog
-- **Loyalty & Rewards** — Tier progress card (crimson→gold gradient), redeem rewards, points history
+### In Progress
+- [ ] Phase 9 — Full localization coverage: remaining 20+ pages still hardcoded English, being migrated to ARB keys incrementally
 
 ## Getting Started
 
