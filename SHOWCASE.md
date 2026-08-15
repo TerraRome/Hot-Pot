@@ -10,37 +10,6 @@ A full-featured Flutter food delivery app built from scratch, covering the compl
 
 ## Screenshots
 
-### Capture Status
-
-| # | Halaman | Route | Tipe | Status |
-|---|---------|-------|------|--------|
-| 01 | Splash | `/splash` | PNG | ✅ |
-| 02 | Onboarding | `/onboarding` | GIF | ✅ |
-| 03 | Sign In | `/signin` | PNG | ✅ |
-| 04 | OTP | `/otp` | GIF | ✅ |
-| 05 | Home | `/` | PNG | ✅ |
-| 06 | Search | `/search` | PNG | ✅ |
-| 07 | Category Browse | `/category` | PNG | ✅ |
-| 08 | Product Detail | `/product` | GIF | ✅ |
-| 09 | Cart | `/cart` | GIF | ✅ |
-| 10 | Checkout | `/checkout` | GIF | ✅ |
-| 11 | Order Tracking | `/tracking` | PNG | ✅ |
-| 12 | Live Tracking | `/live-tracking` | GIF | ✅ |
-| 13 | Invoice | `/invoice` | PNG | ✅ |
-| 14 | Notifications | `/notifications` | GIF | ✅ |
-| 15 | Profile | `/profile` | GIF | ✅ |
-| 16 | Edit Profile | `/edit-profile` | GIF | ✅ |
-| 17 | Saved Addresses | `/addresses` | PNG | ✅ |
-| 18 | Payment Methods | `/payment-methods` | PNG | ✅ |
-| 19 | Favourites | `/favourites` | PNG | ✅ |
-| 20 | My Reviews | `/reviews` | PNG | ✅ |
-| 21 | Promo Vouchers | `/promos` | PNG | ✅ |
-| 22 | Help & FAQ | `/faq` | GIF | ✅ |
-| 23 | Settings | `/settings` | GIF | ✅ |
-| 24 | Loyalty & Rewards | `/loyalty` | GIF | ✅ |
-| 25 | Forgot Password | `/forgot-password` | PNG | ✅ |
-| 26 | Register | `/register` | PNG | ✅ |
-
 ---
 
 ### Auth & Onboarding
