@@ -17,7 +17,7 @@ A full-featured Flutter food delivery app built from scratch, covering the compl
 | 01 | Splash | `/splash` | PNG | ✅ |
 | 02 | Onboarding | `/onboarding` | GIF | ✅ |
 | 03 | Sign In | `/signin` | PNG | ✅ |
-| 04 | OTP | `/otp` | PNG | ✅ |
+| 04 | OTP | `/otp` | GIF | ✅ |
 | 05 | Home | `/` | PNG | ✅ |
 | 06 | Search | `/search` | PNG | ✅ |
 | 07 | Category Browse | `/category` | PNG | ✅ |
@@ -45,7 +45,7 @@ A full-featured Flutter food delivery app built from scratch, covering the compl
 
 | Splash | Onboarding | Sign In | OTP |
 |--------|-----------|---------|-----|
-| <img src="assets/screenshots/01_splash.png" width="200"> | <img src="assets/gif/onboarding.gif" width="200"> | <img src="assets/screenshots/03_signin.png" width="200"> | <img src="assets/screenshots/04_otp.png" width="200"> |
+| <img src="assets/screenshots/01_splash.png" width="200"> | <img src="assets/gif/onboarding.gif" width="200"> | <img src="assets/screenshots/03_signin.png" width="200"> | <img src="assets/gif/04_otp.gif" width="200"> |
 
 ### Browse & Discovery
 
