@@ -39,7 +39,7 @@ A full-featured Flutter food delivery app built from scratch, covering the compl
 | 23 | Settings | `/settings` | GIF | ✅ |
 | 24 | Loyalty & Rewards | `/loyalty` | GIF | ✅ |
 | 25 | Forgot Password | `/forgot-password` | PNG | ✅ |
-| 26 | Register | `/register` | – | ⏳ |
+| 26 | Register | `/register` | PNG | ✅ |
 
 ---
 
@@ -51,7 +51,7 @@ A full-featured Flutter food delivery app built from scratch, covering the compl
 
 | Forgot Password | Register |
 |-----------------|----------|
-| <img src="assets/screenshots/25_forgot_password.png" width="200"> | _pending capture_ |
+| <img src="assets/screenshots/25_forgot_password.png" width="200"> | <img src="assets/screenshots/26_register.png" width="200"> |
 
 ### Browse & Discovery
 
