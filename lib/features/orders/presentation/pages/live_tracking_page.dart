@@ -16,7 +16,28 @@ class _LiveTrackingPageState extends State<LiveTrackingPage>
   late AnimationController _riderCtrl;
   late Animation<double> _pulseAnim;
   late Animation<double> _riderAnim;
-  int _currentStep = 1; // 0=confirmed 1=preparing 2=on-the-way 3=delivered
+
+  int get _currentStep {
+    final t = _riderAnim.value;
+    if (t < 0.25) return 0;
+    if (t < 0.5) return 1;
+    if (t < 1.0) return 2;
+    return 3; // Delivered only once the rider reaches the destination
+  }
+
+  int get _etaMinutes {
+    final t = _riderAnim.value;
+    final m = 12 - (t * 12).floor();
+    return m < 1 ? 1 : m;
+  }
+
+  // Rider only starts moving once the order is "On the Way" (step 2),
+  // so the marker stays at the restaurant during confirmed/preparing.
+  double get _riderRouteProgress {
+    final t = _riderAnim.value;
+    final p = (t - 0.5) / 0.5;
+    return p.clamp(0.0, 0.96);
+  }
 
   @override
   void initState() {
@@ -36,11 +57,12 @@ class _LiveTrackingPageState extends State<LiveTrackingPage>
 
     _riderCtrl = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 4),
-    )..repeat(reverse: true);
-    _riderAnim = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: _riderCtrl, curve: Curves.easeInOut),
-    );
+      duration: const Duration(seconds: 30),
+    )..forward();
+    _riderAnim = Tween<double>(begin: 0.0, end: 1.0).animate(_riderCtrl);
+    _riderCtrl.addListener(() {
+      if (mounted) setState(() {});
+    });
   }
 
   @override
@@ -59,146 +81,120 @@ class _LiveTrackingPageState extends State<LiveTrackingPage>
           // ── Map area ──────────────────────────────────────────────────
           Expanded(
             flex: 5,
-            child: Stack(
-              children: [
-                // Map background
-                Positioned.fill(
-                  child: CustomPaint(
-                    painter: _MapPainter(),
-                  ),
-                ),
-                // Back button
-                SafeArea(
-                  child: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Row(
-                      children: [
-                        GestureDetector(
-                          onTap: () => context.pop(),
-                          child: Container(
-                            width: 40,
-                            height: 40,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              shape: BoxShape.circle,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withValues(alpha: 0.15),
-                                  blurRadius: 8,
-                                ),
-                              ],
-                            ),
-                            child: const Icon(Icons.arrow_back_ios_new,
-                                size: 16, color: AppColors.foreground),
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 14, vertical: 8),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(12),
-                              boxShadow: [
-                                BoxShadow(
-                                  color:
-                                      Colors.black.withValues(alpha: 0.1),
-                                  blurRadius: 8,
-                                ),
-                              ],
-                            ),
-                            child: Row(
-                              children: [
-                                const Expanded(
-                                  child: Text(
-                                    'Live Tracking',
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w700,
-                                      color: AppColors.foreground,
-                                    ),
-                                  ),
-                                ),
-                                AnimatedBuilder(
-                                  animation: _pulseAnim,
-                                  builder: (context, _) => Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 8, vertical: 3),
-                                    decoration: BoxDecoration(
-                                      color: Colors.red,
-                                      borderRadius: BorderRadius.circular(20),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.red.withValues(
-                                              alpha: 0.3 + _pulseAnim.value * 0.2),
-                                          blurRadius: 4 + _pulseAnim.value * 4,
-                                        ),
-                                      ],
-                                    ),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Container(
-                                          width: 6,
-                                          height: 6,
-                                          decoration: const BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                        const SizedBox(width: 4),
-                                        const Text(
-                                          'LIVE',
-                                          style: TextStyle(
-                                            fontSize: 10,
-                                            fontWeight: FontWeight.w800,
-                                            color: Colors.white,
-                                            letterSpacing: 0.5,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                final size = Size(constraints.maxWidth, constraints.maxHeight);
+                final metrics = _routePath(size).computeMetrics().first;
+                final pos = metrics
+                    .getTangentForOffset(
+                        metrics.length * _riderRouteProgress)
+                    ?.position;
+                final delivered = _currentStep >= 3;
+                return Stack(
+                  children: [
+                    // Map background
+                    Positioned.fill(
+                      child: CustomPaint(painter: _MapPainter()),
                     ),
-                  ),
-                ),
-                // Animated rider marker
-                AnimatedBuilder(
-                  animation: _riderAnim,
-                  builder: (context, child) {
-                    final size = MediaQuery.of(context).size;
-                    final x = size.width * 0.3 +
-                        (_riderAnim.value * size.width * 0.25);
-                    final y = size.height * 0.15 +
-                        (_riderAnim.value * size.height * 0.05);
-                    return Positioned(
-                      left: x - 24,
-                      top: y,
-                      child: _RiderMarker(pulseAnim: _pulseAnim),
-                    );
-                  },
-                ),
-                // Destination marker
-                Positioned(
-                  right: 60,
-                  top: 80,
-                  child: _DestinationMarker(),
-                ),
-                // ETA chip
-                Positioned(
-                  bottom: 16,
-                  left: 16,
-                  right: 16,
-                  child: _EtaChip(),
-                ),
-              ],
+                    // Back button + status header
+                    SafeArea(
+                      child: Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Row(
+                          children: [
+                            GestureDetector(
+                              onTap: () => context.pop(),
+                              child: Container(
+                                width: 40,
+                                height: 40,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  shape: BoxShape.circle,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withValues(alpha: 0.15),
+                                      blurRadius: 8,
+                                    ),
+                                  ],
+                                ),
+                                child: const Icon(Icons.arrow_back_ios_new,
+                                    size: 16, color: AppColors.foreground),
+                              ),
+                            ),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 14, vertical: 8),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(12),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color:
+                                          Colors.black.withValues(alpha: 0.1),
+                                      blurRadius: 8,
+                                    ),
+                                  ],
+                                ),
+                                child: Row(
+                                  children: [
+                                    const Expanded(
+                                      child: Text(
+                                        'Live Tracking',
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w700,
+                                          color: AppColors.foreground,
+                                        ),
+                                      ),
+                                    ),
+                                    if (delivered)
+                                      const _LiveBadge(
+                                          label: 'COMPLETED', isLive: false)
+                                    else
+                                      AnimatedBuilder(
+                                        animation: _pulseAnim,
+                                        builder: (context, _) => _LiveBadge(
+                                          label: 'LIVE',
+                                          isLive: true,
+                                          pulseAnim: _pulseAnim,
+                                        ),
+                                      ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    // Animated rider marker following the route
+                    if (pos != null)
+                      Positioned(
+                        left: pos.dx - 24,
+                        top: pos.dy - 24,
+                        child: _RiderMarker(pulseAnim: _pulseAnim),
+                      ),
+                    // Destination marker — center aligns exactly with the route end
+                    Positioned(
+                      left: size.width * 0.85 - 20,
+                      top: size.height * 0.33 - 20,
+                      child: const _DestinationMarker(),
+                    ),
+                    // ETA chip
+                    Positioned(
+                      bottom: 16,
+                      left: 16,
+                      right: 16,
+                      child: _EtaChip(
+                        step: _currentStep,
+                        minutes: _etaMinutes,
+                      ),
+                    ),
+                  ],
+                );
+              },
             ),
           ),
           // ── Bottom sheet ───────────────────────────────────────────────
@@ -234,7 +230,11 @@ class _LiveTrackingPageState extends State<LiveTrackingPage>
                           ),
                         ),
                         const SizedBox(height: 16),
-                        _StatusHero(pulseAnim: _pulseAnim),
+                        _StatusHero(
+                          pulseAnim: _pulseAnim,
+                          step: _currentStep,
+                          minutes: _etaMinutes,
+                        ),
                         const SizedBox(height: 16),
                         _RiderCard(),
                         const SizedBox(height: 16),
@@ -258,6 +258,17 @@ class _LiveTrackingPageState extends State<LiveTrackingPage>
 }
 
 // ── Map painter ───────────────────────────────────────────────────────────────
+
+Path _routePath(Size size) => Path()
+  ..moveTo(size.width * 0.22, size.height * 0.68)
+  ..cubicTo(
+    size.width * 0.45,
+    size.height * 0.5,
+    size.width * 0.62,
+    size.height * 0.55,
+    size.width * 0.85,
+    size.height * 0.33,
+  );
 
 class _MapPainter extends CustomPainter {
   @override
@@ -325,25 +336,100 @@ class _MapPainter extends CustomPainter {
       ..strokeWidth = 4
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.stroke;
-    final routePath = Path()
-      ..moveTo(size.width * 0.3, size.height * 0.35)
-      ..quadraticBezierTo(size.width * 0.45, size.height * 0.25,
-          size.width * 0.75, size.height * 0.22);
-    canvas.drawPath(routePath, routePaint);
+    canvas.drawPath(_routePath(size), routePaint);
   }
 
   @override
   bool shouldRepaint(_MapPainter old) => false;
 }
 
-// ── Status hero ────────────────────────────────────────────────────────────────
+// ── Live badge ────────────────────────────────────────────────────────────────
 
-class _StatusHero extends StatelessWidget {
-  const _StatusHero({required this.pulseAnim});
-  final Animation<double> pulseAnim;
+class _LiveBadge extends StatelessWidget {
+  const _LiveBadge({
+    required this.label,
+    required this.isLive,
+    this.pulseAnim,
+  });
+
+  final String label;
+  final bool isLive;
+  final Animation<double>? pulseAnim;
 
   @override
   Widget build(BuildContext context) {
+    final color = isLive ? Colors.red : const Color(0xFF2E7D32);
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: pulseAnim == null
+            ? null
+            : [
+                BoxShadow(
+                  color: color.withValues(alpha: 0.3 + pulseAnim!.value * 0.2),
+                  blurRadius: 4 + pulseAnim!.value * 4,
+                ),
+              ],
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: 6,
+            height: 6,
+            decoration: const BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.white,
+            ),
+          ),
+          const SizedBox(width: 4),
+          Text(
+            label,
+            style: const TextStyle(
+              fontSize: 10,
+              fontWeight: FontWeight.w800,
+              color: Colors.white,
+              letterSpacing: 0.5,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// ── Status hero ────────────────────────────────────────────────────────────────
+
+class _StatusHero extends StatelessWidget {
+  const _StatusHero({
+    required this.pulseAnim,
+    required this.step,
+    required this.minutes,
+  });
+
+  final Animation<double> pulseAnim;
+  final int step;
+  final int minutes;
+
+  static const _emoji = ['✅', '🍳', '🛵', '🏠'];
+  static const _titles = [
+    'Your order has been confirmed',
+    'Preparing your hot pot',
+    'Your order is on the way!',
+    'Order delivered',
+  ];
+  static const _subtitles = [
+    'Restaurant is confirming your order',
+    'Chef is preparing your hot pot',
+    'Ahmad is riding to you',
+    'Enjoy your meal!',
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    final delivered = step >= 3;
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16),
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
@@ -364,7 +450,7 @@ class _StatusHero extends StatelessWidget {
       ),
       child: Row(
         children: [
-          // Pulsing rider icon
+          // Pulsing status icon
           AnimatedBuilder(
             animation: pulseAnim,
             builder: (context, _) => Container(
@@ -378,41 +464,50 @@ class _StatusHero extends StatelessWidget {
                   width: 2,
                 ),
               ),
-              child: const Center(
-                child: Text('🛵', style: TextStyle(fontSize: 26)),
+              child: Center(
+                child: Text(_emoji[step], style: const TextStyle(fontSize: 26)),
               ),
             ),
           ),
           const SizedBox(width: 14),
-          const Expanded(
+          Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Your order is on the way!',
-                  style: TextStyle(
+                  _titles[step],
+                  style: const TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w800,
                     color: Colors.white,
                   ),
                 ),
-                SizedBox(height: 4),
+                const SizedBox(height: 4),
                 Text(
-                  'Ahmad is riding to you',
-                  style: TextStyle(
+                  _subtitles[step],
+                  style: const TextStyle(
                     fontSize: 12,
                     color: Color(0xE6FFFFFF),
                   ),
                 ),
-                SizedBox(height: 6),
+                const SizedBox(height: 6),
                 Row(
                   children: [
-                    Icon(Icons.access_time_rounded,
-                        size: 13, color: Colors.white),
-                    SizedBox(width: 4),
+                    Icon(
+                      delivered
+                          ? Icons.check_circle_rounded
+                          : Icons.access_time_rounded,
+                      size: 13,
+                      color: Colors.white,
+                    ),
+                    const SizedBox(width: 4),
                     Text(
-                      'Arriving in ~12 min',
-                      style: TextStyle(
+                      delivered
+                          ? 'Delivered • Enjoy!'
+                          : step == 0
+                              ? 'Estimated ~$minutes min'
+                              : 'Arriving in ~$minutes min',
+                      style: const TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w700,
                         color: Colors.white,
@@ -442,7 +537,7 @@ class _RiderMarker extends StatelessWidget {
       children: [
         AnimatedBuilder(
           animation: pulseAnim,
-          builder: (_, __) => Transform.scale(
+          builder: (_, _) => Transform.scale(
             scale: pulseAnim.value,
             child: Container(
               width: 56,
@@ -480,6 +575,7 @@ class _RiderMarker extends StatelessWidget {
 // ── Destination marker ────────────────────────────────────────────────────────
 
 class _DestinationMarker extends StatelessWidget {
+  const _DestinationMarker();
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -502,8 +598,8 @@ class _DestinationMarker extends StatelessWidget {
             child: Text('🏠', style: TextStyle(fontSize: 20)),
           ),
         ),
-        CustomPaint(
-          size: const Size(12, 8),
+        const CustomPaint(
+          size: Size(12, 8),
           painter: _PinTailPainter(color: AppColors.secondary),
         ),
       ],
@@ -533,8 +629,14 @@ class _PinTailPainter extends CustomPainter {
 // ── ETA chip ──────────────────────────────────────────────────────────────────
 
 class _EtaChip extends StatelessWidget {
+  const _EtaChip({required this.step, required this.minutes});
+
+  final int step;
+  final int minutes;
+
   @override
   Widget build(BuildContext context) {
+    final delivered = step >= 3;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       decoration: BoxDecoration(
@@ -549,24 +651,27 @@ class _EtaChip extends StatelessWidget {
       ),
       child: Row(
         children: [
-          const Icon(Icons.access_time_rounded,
-              size: 16, color: AppColors.primary),
+          Icon(
+            delivered ? Icons.check_circle_rounded : Icons.access_time_rounded,
+            size: 16,
+            color: delivered ? AppColors.secondary : AppColors.primary,
+          ),
           const SizedBox(width: 8),
-          const Expanded(
+          Expanded(
             child: Text(
-              'Estimated arrival',
-              style: TextStyle(
+              delivered ? 'Order delivered' : 'Estimated arrival',
+              style: const TextStyle(
                 fontSize: 12,
                 color: AppColors.textSecondary,
               ),
             ),
           ),
-          const Text(
-            '12 min',
+          Text(
+            delivered ? 'Done' : '$minutes min',
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w800,
-              color: AppColors.primary,
+              color: delivered ? AppColors.secondary : AppColors.primary,
             ),
           ),
         ],
@@ -604,11 +709,11 @@ class _RiderCard extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 12),
-            Expanded(
+            const Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     'Ahmad Rider',
                     style: TextStyle(
                       fontSize: 14,
@@ -618,10 +723,10 @@ class _RiderCard extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      const Icon(Icons.star_rounded,
+                      Icon(Icons.star_rounded,
                           size: 13, color: AppColors.secondary),
-                      const SizedBox(width: 3),
-                      const Text(
+                      SizedBox(width: 3),
+                      Text(
                         '4.9  •  Honda Vario  •  B 1234 XYZ',
                         style: TextStyle(
                           fontSize: 11,

@@ -25,7 +25,7 @@ A full-featured Flutter food delivery app built from scratch, covering the compl
 | 09 | Cart | `/cart` | GIF | ✅ |
 | 10 | Checkout | `/checkout` | GIF | ✅ |
 | 11 | Order Tracking | `/tracking` | PNG | ✅ |
-| 12 | Live Tracking | `/live-tracking` | PNG | ✅ |
+| 12 | Live Tracking | `/live-tracking` | GIF | ✅ |
 | 13 | Invoice | `/invoice` | PNG | ✅ |
 | 14 | Notifications | `/notifications` | GIF | ✅ |
 | 15 | Profile | `/profile` | GIF | ✅ |
@@ -67,7 +67,7 @@ A full-featured Flutter food delivery app built from scratch, covering the compl
 
 | Live Tracking | Invoice | Notifications |
 |--------------|---------|--------------|
-| <img src="assets/screenshots/12_live_tracking.png" width="200"> | <img src="assets/screenshots/13_invoice.png" width="200"> | <img src="assets/gif/14_notifications.gif" width="200"> |
+| <img src="assets/gif/12_live_tracking.gif" width="200"> | <img src="assets/screenshots/13_invoice.png" width="200"> | <img src="assets/gif/14_notifications.gif" width="200"> |
 
 ### Profile & Account
 
