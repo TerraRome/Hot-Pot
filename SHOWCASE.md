@@ -1,6 +1,6 @@
 # Crimson Dragon Hot Pot — Portfolio Showcase
 
-A full-featured Flutter food delivery app built from scratch, covering the complete user journey from onboarding to order tracking. Every screen is fully navigable with 24 routes, a custom design system, and production-ready UI patterns.
+A full-featured Flutter food delivery app built from scratch, covering the complete user journey from onboarding to order tracking. Every screen is fully navigable with 26 routes, a custom design system, and production-ready UI patterns.
 
 **GitHub:** https://github.com/TerraRome/Hot-Pot  
 **Stack:** Flutter 3.41.3 · Dart 3.11.1 · GoRouter · Riverpod · Material 3  
@@ -38,6 +38,8 @@ A full-featured Flutter food delivery app built from scratch, covering the compl
 | 22 | Help & FAQ | `/faq` | GIF | ✅ |
 | 23 | Settings | `/settings` | GIF | ✅ |
 | 24 | Loyalty & Rewards | `/loyalty` | GIF | ✅ |
+| 25 | Forgot Password | `/forgot-password` | – | ⏳ |
+| 26 | Register | `/register` | – | ⏳ |
 
 ---
 
@@ -46,6 +48,10 @@ A full-featured Flutter food delivery app built from scratch, covering the compl
 | Splash | Onboarding | Sign In | OTP |
 |--------|-----------|---------|-----|
 | <img src="assets/screenshots/01_splash.png" width="200"> | <img src="assets/gif/onboarding.gif" width="200"> | <img src="assets/screenshots/03_signin.png" width="200"> | <img src="assets/gif/04_otp.gif" width="200"> |
+
+| Forgot Password | Register |
+|-----------------|----------|
+| _pending capture_ | _pending capture_ |
 
 ### Browse & Discovery
 
@@ -83,7 +89,7 @@ A full-featured Flutter food delivery app built from scratch, covering the compl
 
 | Area | Details |
 |------|---------|
-| UI/UX Engineering | 24 fully navigable screens, consistent design system, pixel-level polish |
+| UI/UX Engineering | 26 fully navigable screens, consistent design system, pixel-level polish |
 | State Management | Riverpod architecture, local state with StatefulWidget where appropriate |
 | Navigation | GoRouter with typed route args, deep linking, push/pop stack |
 | Custom Painting | `CustomPainter` animated map on Live Tracking screen |
@@ -98,6 +104,8 @@ A full-featured Flutter food delivery app built from scratch, covering the compl
 
 ```
 Splash → Onboarding (3 slides) → Sign In → OTP Verification
+    │                            ├─→ Forgot Password
+    │                            └─→ Register
     └─→ Home
           ├─→ Search (live filter)
           ├─→ Category Browse
@@ -134,12 +142,22 @@ Splash → Onboarding (3 slides) → Sign In → OTP Verification
 - Smooth slide transitions between screens
 
 **Sign In**
-- Email/phone + password with social login (Google, Facebook, Apple)
-- Remember me toggle, "Forgot Password" link
+- Email/phone + password with social login (Google, Facebook, Apple SVG logos)
+- Remember me toggle, "Forgot Password" link, "Register" link
 - Navigates to OTP after login
 
+**Forgot Password**
+- Email input, "Send Reset Link" CTA
+- Success snackbar + back to Sign In
+
+**Register**
+- Full name, email, phone, password, confirm password fields
+- Password visibility toggles
+- Terms & Conditions checkbox (validation)
+- Navigates to OTP after creating account
+
 **OTP Verification**
-- 6-box individual character input with auto-advance
+- 6-box masked input (password-style dots) with auto-advance
 - 60-second countdown timer with resend
 - Auto-verifies when all 6 digits filled
 
@@ -223,7 +241,7 @@ Splash → Onboarding (3 slides) → Sign In → OTP Verification
 **Profile**
 - Stats row: Orders / Reviews / Points
 - Fully navigable menu (12 items across 4 sections)
-- Dark mode + notifications toggle
+- Settings shortcut → Settings (dark mode, language, notifications)
 - Sign out → back to Sign In
 
 **Edit Profile**
@@ -273,6 +291,7 @@ Splash → Onboarding (3 slides) → Sign In → OTP Verification
 - Email toggles: Receipts, Newsletter
 - Preference toggles: Order History, Always-on Location
 - Privacy toggles: Analytics, Personalization
+- Appearance: Dark Mode toggle + Language switcher (English / Bahasa Indonesia)
 - Account actions: Download Data, Change Password, Delete Account (with confirmation dialog)
 - App version footer
 
@@ -302,7 +321,7 @@ Surface      #FFFFFF  — Pure White
 Font         Inter    — Regular / Medium / SemiBold / Bold
 ```
 
-Applied consistently across all 24 screens:
+Applied consistently across all 26 screens:
 - Spicy badge uses primary gradient
 - Rating stars use secondary gold
 - CTAs use primary red
@@ -313,7 +332,7 @@ Applied consistently across all 24 screens:
 
 ## Technical Highlights
 
-**GoRouter (24 routes)**  
+**GoRouter (26 routes)**  
 All navigation uses typed route args — no raw Map passing. `ProductDetailArgs` and `InvoiceArgs` ensure compile-time safety across push/pop calls.
 
 **Custom Painter — Live Tracking Map**  
@@ -345,10 +364,10 @@ Each feature is self-contained with its own `presentation/pages/` and `presentat
 
 | Metric | Count |
 |--------|-------|
-| Total screens | 24 |
+| Total screens | 26 |
 | Dart files | 30+ |
 | Lines of code | ~7,000+ |
-| Routes | 24 |
+| Routes | 26 |
 | Design tokens | 12 |
 | Feature modules | 10 |
 

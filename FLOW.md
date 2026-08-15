@@ -34,10 +34,16 @@ App Launch
     │
     ├── Email + Password ──► [OTP Verification]
     │                              │
-    ├── Google / Facebook / Apple  │  6-digit code
+    ├── Google / Facebook / Apple  │  6-digit masked input
     │   (Social Login)             │  60s countdown
     │                              │  Auto-verify on complete
     │                              ▼
+    ├── Forgot Password? ──► [Forgot Password] ──► email reset link ──► back to Sign In
+    │
+    ├── Register (no account) ──► [Register] ── full name / email / phone /
+    │                               password / confirm + terms checkbox
+    │                               └──► [OTP Verification]
+    │
     └─────────────────────────► [Home Page]
 ```
 
